@@ -1,0 +1,373 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Professional Logistics Design System - Modern, Animated, Beautiful */
+
+@layer base {
+  :root {
+    /* Core Colors */
+    --background: 0 0% 100%;
+    --foreground: 215 25% 20%;
+
+    /* Card System */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 20%;
+
+    /* Interactive Elements */
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 20%;
+
+    /* Brand Colors - Blue Primary */
+    --primary: 230 88% 49%;
+    /* #0B41E3 */
+    --primary-foreground: 0 0% 98%;
+    --primary-dark: 230 88% 39%;
+    --primary-light: 230 88% 59%;
+
+    /* Golden Orange Secondary */
+    --secondary: 36 83% 50%;
+    /* #E5A121 equivalent */
+    --secondary-foreground: 0 0% 98%;
+    --secondary-dark: 36 83% 40%;
+    --secondary-light: 36 83% 65%;
+
+    /* Neutral Palette */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 94%;
+    --accent-foreground: 215 25% 20%;
+
+    /* Status Colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+
+    /* Border & Input */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 230 88% 49%;
+
+    /* Design System Extensions */
+    --gradient-primary: linear-gradient(135deg, hsl(230 88% 49%), hsl(230 88% 39%));
+    --gradient-secondary: linear-gradient(135deg, hsl(36 83% 50%), hsl(36 83% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(230 88% 49%) 0%, hsl(36 83% 50%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+
+    /* Professional Shadows */
+    --shadow-soft: 0 4px 6px -1px hsl(230 88% 49% / 0.1), 0 2px 4px -1px hsl(230 88% 49% / 0.06);
+    --shadow-medium: 0 10px 15px -3px hsl(230 88% 49% / 0.1), 0 4px 6px -2px hsl(230 88% 49% / 0.05);
+    --shadow-large: 0 25px 50px -12px hsl(230 88% 49% / 0.25);
+    --shadow-glow: 0 0 40px hsl(230 88% 49% / 0.3);
+
+    /* Animation Variables */
+    --animate-duration: 0.3s;
+    --animate-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --animate-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 230 88% 49%;
+  }
+
+  .dark {
+    /* Dark mode with professional logistics theme */
+    --background: 215 25% 8%;
+    --foreground: 0 0% 95%;
+
+    --card: 215 25% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 215 25% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 230 88% 49%;
+    --primary-foreground: 215 25% 8%;
+    --primary-dark: 230 88% 39%;
+    --primary-light: 230 88% 59%;
+
+    --secondary: 36 83% 50%;
+    --secondary-foreground: 215 25% 8%;
+    --secondary-dark: 36 83% 40%;
+    --secondary-light: 36 83% 65%;
+
+    --muted: 215 25% 15%;
+    --muted-foreground: 215 15% 70%;
+    --accent: 215 25% 12%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+
+    --border: 215 25% 18%;
+    --input: 215 25% 18%;
+    --ring: 230 88% 49%;
+
+    /* Dark gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(230 88% 49%), hsl(230 88% 39%));
+    --gradient-secondary: linear-gradient(135deg, hsl(36 83% 50%), hsl(36 83% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(230 88% 49%) 0%, hsl(36 83% 50%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(215 25% 8%) 0%, hsl(215 25% 10%) 100%);
+
+    /* Sidebar colors for consistency */
+    --sidebar-background: 215 25% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 230 88% 49%;
+    --sidebar-primary-foreground: 215 25% 8%;
+    --sidebar-accent: 215 25% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 215 25% 18%;
+    --sidebar-ring: 230 88% 49%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+@layer components {
+
+  /* Professional Button Variants */
+  .btn-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-primary-dark text-primary-foreground;
+    @apply shadow-soft hover:shadow-medium;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-105 hover:-translate-y-0.5;
+  }
+
+  .btn-gradient-secondary {
+    @apply bg-gradient-to-r from-secondary to-secondary-dark text-secondary-foreground;
+    @apply shadow-soft hover:shadow-medium;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-105 hover:-translate-y-0.5;
+  }
+
+  .btn-outline-animated {
+    @apply border-2 border-primary text-primary bg-transparent;
+    @apply relative overflow-hidden;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:text-white hover:border-primary-dark;
+  }
+
+  .btn-outline-animated::before {
+    @apply content-[""] absolute inset-0;
+    @apply bg-gradient-to-r from-primary to-primary-dark;
+    @apply transform -translate-x-full;
+    @apply transition-transform duration-300 ease-out;
+    @apply z-[-1];
+  }
+
+  .btn-outline-animated:hover::before {
+    @apply translate-x-0;
+  }
+
+  /* Card Animations */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:shadow-large hover:-translate-y-2;
+    @apply cursor-pointer;
+  }
+
+  .card-float {
+    @apply animate-[float_6s_ease-in-out_infinite];
+  }
+
+  /* Text Animations */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .text-gradient-hero {
+    @apply bg-gradient-to-r from-primary via-secondary to-primary-dark bg-clip-text text-transparent;
+  }
+
+  /* Layout Utilities */
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-custom {
+    @apply mx-auto;
+    max-width: 75rem;
+  }
+
+  /* Backdrop Effects */
+  .backdrop-glass {
+    @apply backdrop-blur-md bg-white/80 border border-white/20;
+  }
+
+  .backdrop-glass-dark {
+    @apply backdrop-blur-md bg-background/80 border border-border/20;
+  }
+}
+
+@layer utilities {
+
+  /* Animation Keyframes */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Animation Classes */
+  .animate-slide-up {
+    animation: slideInUp 0.6s ease-out;
+  }
+
+  .animate-slide-left {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .animate-slide-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+
+  /* Scroll-triggered animations */
+  .scroll-animate {
+    @apply opacity-0 translate-y-8;
+    @apply transition-all duration-700 ease-out;
+  }
+
+  .scroll-animate.in-view {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Partner scrolling animation */
+  @keyframes scroll-partners {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-partners {
+    animation: scroll-partners 60s linear infinite;
+  }
+
+  .animate-scroll-partners:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out forwards;
+}
