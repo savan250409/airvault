@@ -351,6 +351,10 @@
     animation: scroll-partners 60s linear infinite;
   }
 
+  .animate-scroll-fast {
+    animation: scroll-partners 15s linear infinite;
+  }
+
   .animate-scroll-partners:hover {
     animation-play-state: paused;
   }

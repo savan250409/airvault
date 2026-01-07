@@ -48,7 +48,7 @@ const PartnersSection = () => {
         <div className="hidden md:block overflow-hidden">
           <div className="flex items-center animate-scroll-partners">
             {/* First Set */}
-            <div className="flex items-center space-x-12 shrink-0 px-16">
+            <div className="flex items-center space-x-12 shrink-0 px-6">
               {partners.map((partner, index) => (
                 <div
                   key={`set1-${partner.name}-${index}`}
@@ -69,7 +69,7 @@ const PartnersSection = () => {
             </div>
 
             {/* Second Set (Duplicate for seamless loop) */}
-            <div className="flex items-center space-x-12 shrink-0 px-16">
+            <div className="flex items-center space-x-12 shrink-0 px-6">
               {partners.map((partner, index) => (
                 <div
                   key={`set2-${partner.name}-${index}`}
@@ -90,7 +90,7 @@ const PartnersSection = () => {
             </div>
 
             {/* Third Set (Extra buffer for wide screens) */}
-            <div className="flex items-center space-x-12 shrink-0 px-16">
+            <div className="flex items-center space-x-12 shrink-0 px-6">
               {partners.map((partner, index) => (
                 <div
                   key={`set3-${partner.name}-${index}`}
@@ -111,7 +111,7 @@ const PartnersSection = () => {
             </div>
 
             {/* Fourth Set (Extra buffer for wide screens) */}
-            <div className="flex items-center space-x-12 shrink-0 px-16">
+            <div className="flex items-center space-x-12 shrink-0 px-6">
               {partners.map((partner, index) => (
                 <div
                   key={`set4-${partner.name}-${index}`}

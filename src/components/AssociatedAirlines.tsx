@@ -43,9 +43,9 @@ const AssociatedAirlines = () => {
                 </div>
 
                 <div className="overflow-hidden">
-                    <div className="flex items-center animate-scroll-partners">
+                    <div className="flex items-center animate-scroll-fast">
                         {/* Set 1 */}
-                        <div className="flex items-center space-x-6 shrink-0 px-8">
+                        <div className="flex items-center space-x-6 shrink-0 px-3">
                             {airlines.map((airline, index) => (
                                 <div
                                     key={`set1-${index}`}
@@ -72,7 +72,7 @@ const AssociatedAirlines = () => {
                         </div>
 
                         {/* Set 2 (Duplicate) */}
-                        <div className="flex items-center space-x-6 shrink-0 px-8">
+                        <div className="flex items-center space-x-6 shrink-0 px-3">
                             {airlines.map((airline, index) => (
                                 <div
                                     key={`set2-${index}`}
@@ -99,7 +99,7 @@ const AssociatedAirlines = () => {
                         </div>
 
                         {/* Set 3 (Duplicate) */}
-                        <div className="flex items-center space-x-6 shrink-0 px-8">
+                        <div className="flex items-center space-x-6 shrink-0 px-3">
                             {airlines.map((airline, index) => (
                                 <div
                                     key={`set3-${index}`}
@@ -126,7 +126,7 @@ const AssociatedAirlines = () => {
                         </div>
 
                         {/* Set 4 (Duplicate) */}
-                        <div className="flex items-center space-x-6 shrink-0 px-8">
+                        <div className="flex items-center space-x-6 shrink-0 px-3">
                             {airlines.map((airline, index) => (
                                 <div
                                     key={`set4-${index}`}
