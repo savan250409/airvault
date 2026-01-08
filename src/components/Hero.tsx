@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowRight, Truck, Ship, Plane, Shield, Search, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowRight, Truck, Ship, Plane, Shield, Search, Loader2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import heroImage from "@/assets/hero-logistics.jpg";
+import airFreight from "@/assets/air-freight.jpg";
+import seaTransport from "@/assets/sea-transport.jpg";
+import landTransport from "@/assets/land-transport.jpg";
+import airTransport from "@/assets/air-transport.jpg";
+
+const backgroundImages = [
+  heroImage,
+  airFreight,
+  seaTransport,
+  landTransport,
+  airTransport
+];
 
 const Hero = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
@@ -25,11 +37,20 @@ const Hero = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [trackingData, setTrackingData] = useState<any>(null);
   const [error, setError] = useState("");
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const stats = [
-    { icon: Truck, value: "5000+", label: "Deliveries" },
-    { icon: Ship, value: "150+", label: "Sea Routes" },
-    { icon: Plane, value: "95%", label: "On Time" },
+    { icon: Plane, value: "100+", label: "Destinations" },
+    { icon: Truck, value: "31k+", label: "Deliveries" },
+    { icon: Clock, value: "99.5%", label: "On Time" },
     { icon: Shield, value: "100%", label: "Secure" },
   ];
 
@@ -95,16 +116,20 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt="Professional logistics operations"
-          className="w-full h-full object-cover"
-        />
+        {backgroundImages.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`Professional logistics operations background ${index + 1}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentBgIndex ? "opacity-100" : "opacity-0"
+              }`}
+          />
+        ))}
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/70"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-custom section-padding">
+      <div className="relative z-10 container-custom py-20 px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-slide-left">
             <div className="space-y-6">

@@ -43,7 +43,7 @@ const Header = () => {
             : "bg-[#0B41E3]/95 backdrop-blur-sm" // Background when not scrolled, slightly transparent
         }`}
 > */}
-        <div className="container-custom py-4">
+        <div className="container-custom py-2">
           <div className="flex items-center">
             <div className="flex items-center px-2 py-1 min-w-[150px] justify-center mr-8">
               <Link to="/">

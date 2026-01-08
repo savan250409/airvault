@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Truck, Ship, Clock, Shield } from "lucide-react";
+import { Truck, Plane, Clock, Shield } from "lucide-react";
 
 const StatsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,15 +15,15 @@ const StatsSection = () => {
   const stats = [
     {
       icon: Truck,
-      target: 50000,
+      target: 31000,
       label: "Deliveries",
       suffix: "+",
       color: "text-primary"
     },
     {
-      icon: Ship,
-      target: 150,
-      label: "Sea Routes",
+      icon: Plane,
+      target: 100,
+      label: "Destinations",
       suffix: "+",
       color: "text-secondary"
     },
@@ -105,7 +105,7 @@ const StatsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="section-padding bg-gradient-primary text-primary-foreground"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-primary text-primary-foreground"
     >
       <div className="container-custom">
         {/* Section Header */}

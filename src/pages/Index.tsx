@@ -8,6 +8,9 @@ import Footer from "@/components/Footer";
 
 import AssociatedAirlines from "@/components/AssociatedAirlines";
 import UniversityCollaborations from "@/components/UniversityCollaborations";
+import FeaturesSection from "@/components/FeaturesSection";
+import ServicesSection from "@/components/ServicesSection";
+import AboutSection from "@/components/AboutSection";
 
 const Index = () => {
   return (
@@ -22,8 +25,11 @@ const Index = () => {
       <div className="relative z-10">
         <Header />
         <Hero />
+        <FeaturesSection />
         <PartnersSection />
+        <AboutSection />
         <AssociatedAirlines />
+        <ServicesSection limit={3} />
         <StatsSection />
         <UniversityCollaborations />
         {/* <CaseStudies /> 

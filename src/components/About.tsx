@@ -5,10 +5,10 @@ import aboutTeamImage from "@/assets/about-team.jpg";
 
 const About = () => {
   const achievements = [
-    { icon: Users, value: "10,000+", label: "Happy Clients" },
-    { icon: Globe, value: "50+", label: "Countries Served" },
+    { icon: Users, value: "5k+", label: "Happy Clients" },
+    { icon: Globe, value: "150+", label: "Countries Served" },
     { icon: Award, value: "15+", label: "Years Experience" },
-    { icon: TrendingUp, value: "99.8%", label: "Success Rate" }
+    { icon: TrendingUp, value: "99.9%", label: "Success Rate" }
   ];
 
   const features = [

@@ -188,15 +188,15 @@ const ServicesPage = () => {
           <div className="container-custom">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="text-center">
-                <h3 className="text-4xl font-bold text-primary mb-2">500+</h3>
+                <h3 className="text-4xl font-bold text-primary mb-2">5k+</h3>
                 <p className="text-muted-foreground">Happy Clients</p>
               </div>
               <div className="text-center">
-                <h3 className="text-4xl font-bold text-primary mb-2">98%</h3>
+                <h3 className="text-4xl font-bold text-primary mb-2">99.5%</h3>
                 <p className="text-muted-foreground">On-Time Delivery</p>
               </div>
               <div className="text-center">
-                <h3 className="text-4xl font-bold text-primary mb-2">50+</h3>
+                <h3 className="text-4xl font-bold text-primary mb-2">100+</h3>
                 <p className="text-muted-foreground">Countries Served</p>
               </div>
               <div className="text-center">

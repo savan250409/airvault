@@ -7,10 +7,10 @@ import aboutTeamImage from "@/assets/about-team.jpg";
 
 const AboutPage = () => {
   const achievements = [
-    { icon: Users, value: "10,000+", label: "Happy Clients", color: "text-primary" },
-    { icon: Globe, value: "50+", label: "Countries Served", color: "text-secondary" },
+    { icon: Users, value: "5k+", label: "Happy Clients", color: "text-primary" },
+    { icon: Globe, value: "150+", label: "Countries Served", color: "text-secondary" },
     { icon: Award, value: "15+", label: "Years Experience", color: "text-primary" },
-    { icon: TrendingUp, value: "99.8%", label: "Success Rate", color: "text-secondary" }
+    { icon: TrendingUp, value: "99.9%", label: "Success Rate", color: "text-secondary" }
   ];
 
   const features = [

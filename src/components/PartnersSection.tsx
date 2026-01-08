@@ -33,7 +33,7 @@ const PartnersSection = () => {
   };
 
   return (
-    <section className="py-10 bg-background">
+    <section className="py-20 bg-background">
       <div className="container-custom">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -177,7 +177,7 @@ const PartnersSection = () => {
             <div className="text-sm text-muted-foreground">Global Partners</div>
           </div>
           <div className="text-center p-6 rounded-lg bg-card border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">200+</div>
+            <div className="text-3xl font-bold text-primary mb-2">100+</div>
             <div className="text-sm text-muted-foreground">Destinations</div>
           </div>
           <div className="text-center p-6 rounded-lg bg-card border border-border/50">

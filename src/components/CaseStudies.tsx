@@ -17,46 +17,46 @@ import landTransport from "@/assets/land-transport.jpg";
 const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [
-  {
-    id: "1",
-    slug: "global-electronics-distribution",
-    title: "Global Electronics Distribution",
-    client: "TechCorp International",
-    industry: "Technology",
-    challenge: "Urgent delivery of high-value electronics to 15 countries within 48 hours",
-    solution: "Coordinated multi-destination air freight with priority handling",
-    results: ["100% on-time delivery", "Zero damage incidents", "30% cost savings"],
-    image: airTransport
-  },
-  {
-    id: "2",
-    slug: "automotive-parts-supply-chain",
-    title: "Automotive Parts Supply Chain",
-    client: "AutoManufacture Ltd",
-    industry: "Automotive",
-    challenge: "Just-in-time delivery system for automotive parts across 3 countries",
-    solution: "Dedicated route optimization with GPS tracking and predictive logistics",
-    results: ["45% inventory cost reduction", "99.8% delivery accuracy", "Real-time visibility"],
-    image: landTransport
-  },
-  {
-    id: "3",
-    slug: "pharmaceutical-cold-chain",
-    title: "Pharmaceutical Cold Chain",
-    client: "PharmaCare Solutions",
-    industry: "Healthcare",
-    challenge: "Temperature-sensitive medications maintaining 2-8°C across continents",
-    solution: "Specialized reefer containers with continuous temperature monitoring",
-    results: ["100% temperature compliance", "50% cost reduction", "Zero product loss"],
-    image: seaTransport
-  }
-];
+    {
+      id: "1",
+      slug: "global-electronics-distribution",
+      title: "Global Electronics Distribution",
+      client: "TechCorp International",
+      industry: "Technology",
+      challenge: "Urgent delivery of high-value electronics to 15 countries within 48 hours",
+      solution: "Coordinated multi-destination air freight with priority handling",
+      results: ["100% on-time delivery", "Zero damage incidents", "30% cost savings"],
+      image: airTransport
+    },
+    {
+      id: "2",
+      slug: "automotive-parts-supply-chain",
+      title: "Automotive Parts Supply Chain",
+      client: "AutoManufacture Ltd",
+      industry: "Automotive",
+      challenge: "Just-in-time delivery system for automotive parts across 3 countries",
+      solution: "Dedicated route optimization with GPS tracking and predictive logistics",
+      results: ["45% inventory cost reduction", "99.9% delivery accuracy", "Real-time visibility"],
+      image: landTransport
+    },
+    {
+      id: "3",
+      slug: "pharmaceutical-cold-chain",
+      title: "Pharmaceutical Cold Chain",
+      client: "PharmaCare Solutions",
+      industry: "Healthcare",
+      challenge: "Temperature-sensitive medications maintaining 2-8°C across continents",
+      solution: "Specialized reefer containers with continuous temperature monitoring",
+      results: ["100% temperature compliance", "50% cost reduction", "Zero product loss"],
+      image: seaTransport
+    }
+  ];
 
   const additionalMetrics = [
     { value: "500+", label: "Successful Projects", icon: Award },
-    { value: "98%", label: "Client Retention", icon: Users },
+    { value: "99.9%", label: "Client Retention", icon: Users },
     { value: "$50M+", label: "Cost Savings", icon: BarChart3 },
-    { value: "50+", label: "Countries Served", icon: Globe }
+    { value: "150+", label: "Countries Served", icon: Globe }
   ];
 
   return (
@@ -77,7 +77,7 @@ const CaseStudies = () => {
           </p>
         </div>
 
-        <Carousel 
+        <Carousel
           className="w-full max-w-5xl mx-auto mb-16"
           plugins={[Autoplay({ delay: 5000 })]}
           opts={{ loop: true }}
@@ -87,8 +87,8 @@ const CaseStudies = () => {
               <CarouselItem key={study.id}>
                 <Card className="overflow-hidden card-hover group">
                   <div className="relative h-64">
-                    <img 
-                      src={study.image} 
+                    <img
+                      src={study.image}
                       alt={study.client}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -98,18 +98,18 @@ const CaseStudies = () => {
                       <p className="text-sm text-white/80">{study.industry}</p>
                     </div>
                   </div>
-                  
+
                   <CardContent className="p-8 space-y-4">
                     <div>
                       <h4 className="font-semibold text-primary mb-2">Challenge</h4>
                       <p className="text-muted-foreground text-sm">{study.challenge}</p>
                     </div>
-                    
+
                     <div>
                       <h4 className="font-semibold text-primary mb-2">Solution</h4>
                       <p className="text-muted-foreground text-sm">{study.solution}</p>
                     </div>
-                    
+
                     <div>
                       <h4 className="font-semibold text-primary mb-2">Results</h4>
                       <ul className="space-y-2">
@@ -121,9 +121,9 @@ const CaseStudies = () => {
                         ))}
                       </ul>
                     </div>
-                    
-                    <Button 
-                      variant="outline-animated" 
+
+                    <Button
+                      variant="outline-animated"
                       className="mt-6 w-full"
                       onClick={() => navigate(`/case-study/${study.slug}`)}
                     >
@@ -141,8 +141,8 @@ const CaseStudies = () => {
 
         <div className="grid md:grid-cols-4 gap-6 animate-slide-up">
           {additionalMetrics.map((metric, index) => (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className="p-6 text-center card-hover"
               style={{ animationDelay: `${index * 0.1}s` }}
             >

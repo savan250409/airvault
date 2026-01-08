@@ -45,7 +45,7 @@ const caseStudies = [
     solution: "We implemented a dedicated route optimization system with GPS tracking and predictive logistics algorithms. Our network of strategically located distribution centers enabled faster deliveries. Real-time data integration with their ERP system provided complete visibility and automated reordering.",
     results: [
       "45% reduction in inventory holding costs",
-      "99.8% delivery accuracy rate maintained",
+      "99.9% delivery accuracy rate maintained",
       "Real-time visibility across entire supply chain",
       "Production downtime reduced by 60%",
       "Annual savings of $3.2M achieved"
