@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => ({
   base: "/", // 🔥 IMPORTANT FIX
 
   server: {
+    allowedHosts: ["airvault-savan.onrender.com"],
     host: "::",
     port: 8081,
   },
