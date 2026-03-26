@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BASE_URI from "@/config";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const Dashboard = () => {
 
   const fetchInternshipCount = async () => {
     try {
-      const res = await axios.get("http://localhost:8090/api/internship");
+      const res = await axios.get(`${BASE_URI}/api/internship`);
       setInternshipCount(res.data.count); // 👈 yaha se count le rahe hai
     } catch (error) {
       console.error("Error fetching internship count:", error);

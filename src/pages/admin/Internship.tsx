@@ -3,6 +3,7 @@ import { Trash2, Eye } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { X } from "lucide-react";
 import axios from "axios";
+import BASE_URI from "@/config";
 
 // ✅ Type
 interface Internship {
@@ -36,7 +37,7 @@ const InternshipPage = () => {
     const fetchInternships = async () => {
         try {
             const res = await axios.get<{ data: Internship[] }>(
-                "http://localhost:8090/api/internship"
+                `${BASE_URI}/api/internship`
             );
             setData(res.data.data);
         } catch (err) {
