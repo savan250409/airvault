@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import BASE_URI from "@/config";
+import Confetti from "react-confetti";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 const Internship = () => {
@@ -22,7 +23,7 @@ const Internship = () => {
     const [answers, setAnswers] = useState({});
     const [timeLeft, setTimeLeft] = useState(60);
     const [lockedQuestions, setLockedQuestions] = useState({});
-
+    const [showConfetti, setShowConfetti] = useState(false);
     const sections = [
         {
             title: "Section A - Air freight fundamentals",
@@ -231,8 +232,22 @@ const Internship = () => {
                 showConfirmButton: false,
                 timer: 2000,
             });
+            setTimeout(() => {
+                Swal.fire({
+                    icon: "info",
+                    title: "Aptitude Test Instructions",
+                    html: `
+            <p>This is an Aptitude Test.</p>
+            <p>Total <b>30 MCQ</b> questions.</p>
+            <p>Click <b>OK</b> to start the test.</p>
+        `,
+                    confirmButtonText: "OK"
+                }).then(() => {
+                    setSubmitted(true); // ✅ yaha se test start hoga
+                });
+            }, 2000);
 
-            setSubmitted(true);
+            // setSubmitted(true);
 
         } catch (error) {
 
@@ -286,6 +301,11 @@ const Internship = () => {
 
     // ✅ FINAL SUBMIT (TOAST ONLY)
     const handleFinalSubmit = async () => {
+        setShowConfetti(true);
+
+        setTimeout(() => {
+            setShowConfetti(false);
+        }, 4000);
         try {
             let globalIndex = 0;
             const formattedAnswers = {};
@@ -313,13 +333,16 @@ const Internship = () => {
                 icon: "success",
                 title: "Test submitted successfully!",
                 showConfirmButton: false,
-                timer: 2000,
-            });
+                timer: 4000,
+            }).then(() => {
+                window.location.href = "/";
+            })
+                ;
 
             // 🔥 REDIRECT AFTER SUBMIT
-            setTimeout(() => {
-                window.location.href = "/";
-            }, 2000);
+            // setTimeout(() => {
+            //     window.location.href = "/";
+            // }, 5000);
 
         } catch {
             Swal.fire({
@@ -350,8 +373,18 @@ const Internship = () => {
     };
     return (
         <>
+            {/* 🎉 CONFETTI TOP PE */}
+            {showConfetti && (
+                <Confetti
+                    width={window.innerWidth}
+                    height={window.innerHeight}
+                    numberOfPieces={400}
+                    recycle={false}
+                />
+            )}
+
             {/* GLOBAL HEADER */}
-            <Header />
+            {!submitted && <Header />}
 
             <div className="min-h-screen bg-[#f5f7fc] py-10 px-6">
                 <div className="w-full bg-white rounded-xl shadow">
@@ -362,10 +395,21 @@ const Internship = () => {
                     </div> */}
                     <div className="bg-blue-700 text-white p-6 rounded-t-xl">
                         <div className="flex justify-between items-center">
+
+                            {/* LEFT SIDE */}
                             <div>
                                 <h1 className="text-lg font-bold">Airvault Express</h1>
                                 <p className="text-xs opacity-80">AND LOGISTICS PVT. LTD.</p>
                             </div>
+
+                            {/* RIGHT SIDE TIMER */}
+                            {submitted && (
+                                <div className="text-right">
+                                    <p className="text-sm">Time Left</p>
+                                    <p className="text-2xl font-bold">⏱ {timeLeft}s</p>
+                                </div>
+                            )}
+
                         </div>
                     </div>
 
@@ -539,9 +583,9 @@ const Internship = () => {
                                 <button
                                     disabled={submitted}
                                     className={`px-8 py-3 rounded-lg text-white 
-      ${submitted ? "bg-gray-400 cursor-not-allowed" : "bg-[#0057b8] hover:bg-blue-700"}`}
+${submitted ? "bg-gray-400 cursor-not-allowed" : "bg-[#0057b8] hover:bg-blue-700"}`}
                                 >
-                                    Continue →
+                                    Start Test →
                                 </button>
                             </div>
                         </form>
@@ -549,27 +593,12 @@ const Internship = () => {
 
                     {/* QUIZ */}
                     {submitted && (
-                        <div className="flex justify-center items-center min-h-[60vh]">
+                        // <div className="flex justify-center items-center min-h-[60vh]">
+                        <div className="flex justify-center items-start min-h-[60vh] px-10 py-6">
 
                             <div className="w-full max-w-2xl border rounded-xl p-6 bg-white shadow">
 
-                                {/* Section Title */}
-                                <div className="mb-4">
-                                    {(() => {
-                                        const [label, title] = sectionTitles[currentIndex].split(" - ");
-                                        return (
-                                            <div className="flex items-center gap-3">
-                                                <span className="bg-[#0D2DD0] text-white text-xs px-3 py-1 rounded-full font-semibold">
-                                                    {label}
-                                                </span>
-                                                <h2 className="text-lg font-semibold">{title}</h2>
-                                            </div>
-                                        );
-                                    })()}
-                                </div>
-
-                                {/* Question */}
-                                <p className="mb-4 font-medium text-center">
+                                <p className="mb-4 font-medium text-left">
                                     {questions[currentIndex].question}
                                 </p>
 
@@ -578,7 +607,7 @@ const Internship = () => {
                                     {questions[currentIndex].options.map((opt, i) => (
                                         <label
                                             key={i}
-                                            className={`p-3 border rounded-lg cursor-pointer text-center ${answers[currentIndex] === opt
+                                            className={`p-3 border rounded-lg cursor-pointer text-left flex items-center gap-3 ${answers[currentIndex] === opt
                                                 ? "bg-blue-50 border-blue-500"
                                                 : ""
                                                 }`}
@@ -588,20 +617,20 @@ const Internship = () => {
                                                 checked={answers[currentIndex] === opt}
                                                 onChange={() => handleSelect(currentIndex, opt)}
                                             />
-                                            <span className="ml-2">{opt}</span>
+                                            <span>{opt}</span>
                                         </label>
                                     ))}
                                 </div>
 
                                 {/* Bottom */}
-                                <div className="flex justify-between mt-6">
-                                    <p className="text-red-500">⏱ {timeLeft}s</p>
+                                <div className="flex justify-end mt-6">
+
 
                                     <button
-                                        onClick={handleNext}
+                                        onClick={currentIndex === questions.length - 1 ? handleFinalSubmit : handleNext}
                                         className="bg-[#0057b8] text-white px-5 py-2 rounded"
                                     >
-                                        Next →
+                                        {currentIndex === questions.length - 1 ? "Finish" : "Next →"}
                                     </button>
                                 </div>
 
@@ -613,7 +642,7 @@ const Internship = () => {
             </div>
 
             {/* GLOBAL FOOTER */}
-            <Footer />
+            {!submitted && <Footer />}
         </>
     );
 };
