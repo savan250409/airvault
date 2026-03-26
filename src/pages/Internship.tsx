@@ -425,6 +425,11 @@ const Internship = () => {
                     <div className="bg-yellow-100 px-6 py-2 text-xs">
                         ⭐ Eligibility clause: Only candidates scoring <b>30 or above out of 40</b> are eligible.
                     </div>
+                    {submitted && (
+                        <div className="px-6 py-2 flex justify-end text-lg font-semibold text-gray-700">
+                            {currentIndex + 1} / {questions.length}
+                        </div>
+                    )}
                     {/* FORM */}
                     {/* <form onSubmit={handleSubmit} className="p-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
