@@ -9,7 +9,7 @@ import {
   addService,
   updateService,
   deleteService,
-  upload // multer middleware exported from controller
+  upload
 } from "../backend/controllers/serviceController.js";
 import {
   createInternship,
@@ -24,6 +24,13 @@ import {
   updateAdminProfile
 } from "../backend/controllers/authController.js";
 
+import {
+  createQuestion,
+  getQuestions,
+  updateQuestion,
+  deleteQuestion,
+  bulkInsertQuestions
+} from "../backend/controllers/questionsController.js";
 // ---------------- Services routes ----------------
 router.get("/services", getAllServices);
 router.get("/services/:id", getServiceById);
@@ -52,4 +59,10 @@ router.post("/internship", createInternship);
 router.get("/internship", getAllInternships);
 router.get("/internship/:id", getInternshipById);
 router.post("/internship/submit-test", submitTest);
+
+router.post("/questions", createQuestion);
+router.get("/questions", getQuestions);
+router.put("/questions/:id", updateQuestion);
+router.delete("/questions/:id", deleteQuestion);
+router.post("/questions/bulk", bulkInsertQuestions);
 export default router;
