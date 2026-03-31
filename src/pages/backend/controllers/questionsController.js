@@ -24,14 +24,14 @@ export const createQuestion = async (req, res) => {
         }
 
         // ✅ LIMIT 40 CHECK
-        const [count] = await pool.query("SELECT COUNT(*) as total FROM questions");
+        // const [count] = await pool.query("SELECT COUNT(*) as total FROM questions");
 
-        if (count[0].total >= 40) {
-            return res.status(400).json({
-                status: false,
-                message: "Maximum 40 questions allowed",
-            });
-        }
+        // if (count[0].total >= 40) {
+        //     return res.status(400).json({
+        //         status: false,
+        //         message: "Maximum 40 questions allowed",
+        //     });
+        // }
 
         const sql = `
             INSERT INTO questions 
@@ -58,18 +58,36 @@ export const createQuestion = async (req, res) => {
 // ================= GET ALL =================
 export const getQuestions = async (req, res) => {
     try {
-        // ✅ ONLY 40 RETURN
-        const [rows] = await pool.query(
-            "SELECT * FROM questions ORDER BY id DESC LIMIT 40"
+        await ensureQuestionLimitColumn();
+
+        // 👉 admin se limit lo (sirf show karna hai)
+        const [adminRows] = await pool.query(
+            "SELECT question_limit FROM admin ORDER BY id ASC LIMIT 1"
         );
 
+        let limit = 10;
+
+        if (adminRows.length > 0 && adminRows[0].question_limit) {
+            limit = adminRows[0].question_limit;
+        }
+
+        // ❌ LIMIT hata diya (sab questions aayenge)
+        const [rows] = await pool.query(
+            `SELECT * FROM questions ORDER BY id DESC`
+        );
+
+        // ✅ final response
         res.json({
             status: true,
+            question_limit: limit,
             data: rows
         });
 
     } catch (err) {
-        res.status(500).json({ status: false });
+        console.log(err);
+        res.status(500).json({
+            status: false
+        });
     }
 };
 
@@ -117,7 +135,21 @@ export const deleteQuestion = async (req, res) => {
 };
 export const bulkInsertQuestions = async (req, res) => {
     try {
-        const { questions } = req.body;
+        let { questions } = req.body;
+
+        // ✅ अगर single object आया तो उसे array बना दो
+        if (!questions && req.body.question) {
+            questions = [{
+                question: req.body.question,
+                options: [
+                    req.body.option1,
+                    req.body.option2,
+                    req.body.option3,
+                    req.body.option4
+                ],
+                correct_answer: req.body.correct_answer || null
+            }];
+        }
 
         if (!questions || !Array.isArray(questions)) {
             return res.status(400).json({
@@ -154,7 +186,7 @@ export const bulkInsertQuestions = async (req, res) => {
                 });
             }
 
-            let correctAnswer = null; // default
+            let correctAnswer = null;
 
             if (
                 q.correct_answer !== undefined &&
@@ -164,7 +196,6 @@ export const bulkInsertQuestions = async (req, res) => {
 
                 let index = -1;
 
-                // number case (1–4)
                 if (typeof q.correct_answer === "number") {
                     if (![1, 2, 3, 4].includes(q.correct_answer)) {
                         return res.status(400).json({
@@ -175,7 +206,6 @@ export const bulkInsertQuestions = async (req, res) => {
                     index = q.correct_answer - 1;
                 }
 
-                // string case
                 else if (typeof q.correct_answer === "string") {
                     index = q.options.findIndex(
                         opt =>
@@ -191,14 +221,6 @@ export const bulkInsertQuestions = async (req, res) => {
                     }
                 }
 
-                else {
-                    return res.status(400).json({
-                        status: false,
-                        message: `Invalid correct answer format`
-                    });
-                }
-
-                // ✅ convert to A/B/C/D
                 const map = ["A", "B", "C", "D"];
                 correctAnswer = map[index];
             }
@@ -209,17 +231,10 @@ export const bulkInsertQuestions = async (req, res) => {
                 q.options[1],
                 q.options[2],
                 q.options[3],
-                correctAnswer // A/B/C/D or NULL
+                correctAnswer
             ]);
 
             existingQuestions.push(qText);
-        }
-
-        if (existingQuestions.length > 40) {
-            return res.status(400).json({
-                status: false,
-                message: "Max 40 questions allowed"
-            });
         }
 
         await pool.query(
@@ -231,7 +246,7 @@ export const bulkInsertQuestions = async (req, res) => {
 
         return res.json({
             status: true,
-            message: "Bulk insert success"
+            message: "Insert success"
         });
 
     } catch (err) {
@@ -239,6 +254,85 @@ export const bulkInsertQuestions = async (req, res) => {
         return res.status(500).json({
             status: false,
             message: "Server error"
+        });
+    }
+};
+
+
+const ensureQuestionLimitColumn = async () => {
+    try {
+        // check column exist or not
+        const [columns] = await pool.query(`
+            SHOW COLUMNS FROM admin LIKE 'question_limit'
+        `);
+
+        // agar column nahi mila to create karo
+        if (columns.length === 0) {
+            await pool.query(`
+                ALTER TABLE admin ADD COLUMN question_limit INT DEFAULT 40
+            `);
+
+            console.log("✅ question_limit column created");
+        }
+
+    } catch (err) {
+        console.log("Column check error:", err);
+    }
+};
+export const setQuestionLimit = async (req, res) => {
+    try {
+        await ensureQuestionLimitColumn();
+
+        const { limit } = req.body;
+
+        if (!limit) {
+            return res.status(400).json({
+                status: false,
+                message: "limit required"
+            });
+        }
+
+        // 👉 first admin update karo
+        await pool.query(
+            "UPDATE admin SET question_limit = ? ORDER BY id ASC LIMIT 1",
+            [limit]
+        );
+
+        res.json({
+            status: true,
+            message: "Limit saved successfully"
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: false });
+    }
+};
+
+export const getQuestionLimit = async (req, res) => {
+    try {
+        await ensureQuestionLimitColumn();
+
+        // 👉 first admin se limit lo
+        const [rows] = await pool.query(
+            "SELECT question_limit FROM admin ORDER BY id ASC LIMIT 1"
+        );
+
+        let limit = 10;
+
+        if (rows.length > 0 && rows[0].question_limit) {
+            limit = rows[0].question_limit;
+        }
+
+        res.json({
+            status: true,
+            question_limit: limit
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: false
         });
     }
 };

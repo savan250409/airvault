@@ -66,12 +66,6 @@ const InternshipPage = () => {
                 <h1 className="text-2xl font-bold text-blue-900">
                     Internship Applications
                 </h1>
-                <button
-                    onClick={() => window.location.href = "/admin/internship-manage"}
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
-                >
-                    + Add Question
-                </button>
             </div>
 
             {/* Table */}
@@ -216,27 +210,18 @@ const InternshipPage = () => {
                                 <h3 className="font-semibold text-lg mb-2">Test Answers:</h3>
 
                                 {Object.entries(JSON.parse(selectedItem.test_answers)).map(
-                                    ([section, questions]: any, i) => (
-                                        <div key={i} className="mb-4">
-                                            <h4 className="font-semibold text-blue-600 mb-2">
-                                                {section}
-                                            </h4>
+                                    ([question, answer]: any, index) => (
+                                        <div
+                                            key={index}
+                                            className="bg-gray-100 p-3 rounded mb-2"
+                                        >
+                                            <p className="text-sm font-medium">
+                                                <strong>Q{index + 1}:</strong> {question}
+                                            </p>
 
-                                            {Object.entries(questions).map(
-                                                ([q, ans]: any, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className="bg-gray-100 p-2 rounded mb-2"
-                                                    >
-                                                        <p className="text-sm">
-                                                            <strong>Q:</strong> {q}
-                                                        </p>
-                                                        <p className="text-sm text-green-700">
-                                                            <strong>A:</strong> {ans}
-                                                        </p>
-                                                    </div>
-                                                )
-                                            )}
+                                            <p className="text-sm text-green-700">
+                                                <strong>Answer:</strong> {answer}
+                                            </p>
                                         </div>
                                     )
                                 )}

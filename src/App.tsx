@@ -31,8 +31,7 @@ import Blog_manage from "./pages/admin/Blog_manage";
 import CaseStudies from "./pages/admin/CaseStudies";
 import CaseStudies_manage from "./pages/admin/CaseStudies_manage";
 import InternshipAdmin from "./pages/admin/Internship";
-import InternshipManage from "./pages/admin/Internship_manage";
-
+import Question from "./pages/admin/question";
 
 const queryClient = new QueryClient();
 
@@ -72,7 +71,7 @@ const App = () => (
               <Route path="/admin/case-studies/add" element={<CaseStudies_manage />} />
               <Route path="/admin/case-studies/edit/:id" element={<CaseStudies_manage />} />
               <Route path="/admin/internship" element={<InternshipAdmin />} />
-              <Route path="/admin/internship-manage" element={<InternshipManage />} />
+              <Route path="/admin/question" element={<Question />} />
             </Route>
           </Route>
 

@@ -29,7 +29,9 @@ import {
   getQuestions,
   updateQuestion,
   deleteQuestion,
-  bulkInsertQuestions
+  bulkInsertQuestions,
+  setQuestionLimit,
+  getQuestionLimit
 } from "../backend/controllers/questionsController.js";
 // ---------------- Services routes ----------------
 router.get("/services", getAllServices);
@@ -58,11 +60,16 @@ router.put("/auth/update-profile", updateAdminProfile);
 router.post("/internship", createInternship);
 router.get("/internship", getAllInternships);
 router.get("/internship/:id", getInternshipById);
-router.post("/internship/submit-test", submitTest);
+// router.post("/internship/submit-test", submitTest);
+router.route("/internship/submit-test")
+  .post(submitTest)
+  .put(submitTest);
 
 router.post("/questions", createQuestion);
 router.get("/questions", getQuestions);
 router.put("/questions/:id", updateQuestion);
 router.delete("/questions/:id", deleteQuestion);
 router.post("/questions/bulk", bulkInsertQuestions);
+router.post("/set-question-limit", setQuestionLimit);
+router.get("/get-question-limit", getQuestionLimit);
 export default router;

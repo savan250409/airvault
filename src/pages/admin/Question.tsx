@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import BASE_URI from "@/config";
 import Swal from "sweetalert2";
+import BASE_URI from "@/config";
 
 interface Question {
     id?: number;
@@ -14,7 +14,7 @@ interface Question {
     correct_answer: string;
 }
 
-const InternshipManage = () => {
+const Questions = () => {
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [editId, setEditId] = useState<number | null>(null);
@@ -23,7 +23,6 @@ const InternshipManage = () => {
 
     const [bulkJson, setBulkJson] = useState("");
 
-    // ✅ ADD FORM (separate)
     const [addForm, setAddForm] = useState<Question>({
         question: "",
         option1: "",
@@ -33,7 +32,6 @@ const InternshipManage = () => {
         correct_answer: "",
     });
 
-    // ✅ EDIT FORM (separate)
     const [editForm, setEditForm] = useState<Question>({
         question: "",
         option1: "",
@@ -41,23 +39,38 @@ const InternshipManage = () => {
         option3: "",
         option4: "",
         correct_answer: "",
-    });
+    }); const [limit, setLimit] = useState<number>(0);
 
-    // FETCH
+    // ================= FETCH =================
     const fetchQuestions = async () => {
-        const res = await axios.get(`${BASE_URI}/api/questions`);
-        setQuestions(res.data.data);
+        try {
+            const res = await axios.get(`${BASE_URI}/api/questions`);
+            setQuestions(res.data.data || []);
+        } catch {
+            toast.error("Failed to fetch questions");
+        }
     };
 
     useEffect(() => {
         fetchQuestions();
-    }, []);
+        fetchLimit(); // 👈 ye add kar
 
-    // ADD
+    }, []);
+    const fetchLimit = async () => {
+        try {
+            const res = await axios.get(`${BASE_URI}/api/get-question-limit`);
+            setLimit(res.data.question_limit || 0);
+        } catch {
+            toast.error("Failed to fetch limit");
+        }
+    };
+
+    // ================= ADD =================
     const handleAdd = async () => {
         try {
             await axios.post(`${BASE_URI}/api/questions`, addForm);
-            toast.success("Question added successfully ✅");
+
+            toast.success("Question added ✅");
 
             setAddForm({
                 question: "",
@@ -71,38 +84,37 @@ const InternshipManage = () => {
             fetchQuestions();
 
         } catch (err: any) {
-            alert(err?.response?.data?.message || "Error");
+            toast.error(err?.response?.data?.message || "Error");
         }
     };
 
-    // DELETE
+    // ================= DELETE =================
     const handleDelete = async (id: number) => {
         try {
             await axios.delete(`${BASE_URI}/api/questions/${id}`);
 
-            toast.success("Deleted successfully 🗑️");
-
+            toast.success("Deleted 🗑️");
             fetchQuestions();
 
         } catch {
             toast.error("Delete failed");
         }
-
     };
 
-    // EDIT
+    // ================= EDIT =================
     const handleEdit = (q: Question) => {
-        setEditForm(q); // ✅ only modal
+        setEditForm(q);
         setEditId(q.id || null);
         setIsEditModalOpen(true);
     };
 
-    // UPDATE
+    // ================= UPDATE =================
     const handleUpdateConfirm = async () => {
-
-
         try {
-            await axios.put(`${BASE_URI}/api/questions/${editId}`, editForm);
+            await axios.put(
+                `${BASE_URI}/api/questions/${editId}`,
+                editForm
+            );
 
             setIsEditModalOpen(false);
             fetchQuestions();
@@ -110,7 +122,6 @@ const InternshipManage = () => {
             Swal.fire({
                 icon: "success",
                 title: "Updated!",
-                text: "Question updated successfully",
                 timer: 1500,
                 showConfirmButton: false
             });
@@ -120,15 +131,17 @@ const InternshipManage = () => {
         }
     };
 
-    // BULK
+    // ================= BULK =================
     const handleBulkUpload = async () => {
         try {
             const parsed = JSON.parse(bulkJson);
 
-            await axios.post(`${BASE_URI}/api/questions/bulk`, parsed);
+            await axios.post(
+                `${BASE_URI}/api/questions/bulk`,
+                parsed
+            );
 
-            toast.success("Bulk upload successful 🚀");
-
+            toast.success("Bulk upload success 🚀");
             setBulkJson("");
             fetchQuestions();
 
@@ -136,13 +149,45 @@ const InternshipManage = () => {
             toast.error("Invalid JSON ❌");
         }
     };
+    const handleSetLimit = async () => {
+        try {
+            await axios.post(`${BASE_URI}/api/set-question-limit`, {
+                limit: limit
+            });
+
+            toast.success("Question limit saved ✅");
+
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Error");
+        }
+    };
 
     return (
         <div className="p-6">
             <Toaster position="top-right" />
-            <h1 className="text-2xl font-bold mb-4">Manage Questions</h1>
 
-            {/* 🔥 TOGGLE */}
+            <h1 className="text-2xl font-bold mb-4">Manage Questions</h1>
+            {/* LIMIT SET */}
+            <div className="bg-white p-4 rounded shadow mb-6 flex items-center gap-3">
+
+                <input
+                    type="number"
+                    className="border p-2 w-40"
+                    placeholder="Enter limit"
+                    value={limit}
+                    onChange={(e) => setLimit(Number(e.target.value))}
+                />
+
+                <button
+                    onClick={handleSetLimit}
+                    className="bg-green-600 text-white px-4 py-2 rounded"
+                >
+                    Set Limit
+                </button>
+
+            </div>
+
+            {/* MODE */}
             <div className="flex gap-2 mb-4">
                 <button
                     onClick={() => setMode("single")}
@@ -159,7 +204,7 @@ const InternshipManage = () => {
                 </button>
             </div>
 
-            {/* ✅ SINGLE ADD */}
+            {/* ADD FORM */}
             {mode === "single" && (
                 <div className="bg-white p-4 rounded shadow mb-6 grid gap-3">
 
@@ -202,7 +247,7 @@ const InternshipManage = () => {
                 </div>
             )}
 
-            {/* ✅ BULK */}
+            {/* BULK */}
             {mode === "bulk" && (
                 <div className="bg-white p-4 rounded shadow mb-6">
 
@@ -258,7 +303,7 @@ const InternshipManage = () => {
                 ))}
             </div>
 
-            {/* ✅ EDIT MODAL */}
+            {/* EDIT MODAL */}
             {isEditModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
 
@@ -297,7 +342,6 @@ const InternshipManage = () => {
                         />
 
                         <div className="flex justify-end gap-2">
-
                             <button
                                 onClick={() => setIsEditModalOpen(false)}
                                 className="bg-gray-500 text-white px-4 py-2 rounded"
@@ -311,10 +355,10 @@ const InternshipManage = () => {
                             >
                                 Update
                             </button>
-
                         </div>
 
                     </div>
+
                 </div>
             )}
 
@@ -322,4 +366,4 @@ const InternshipManage = () => {
     );
 };
 
-export default InternshipManage;
+export default Questions;

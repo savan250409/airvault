@@ -133,6 +133,15 @@ const AdminLayout = () => {
           >
             Internship
           </NavLink>
+          <NavLink
+            to="/admin/question"
+            className={({ isActive }) =>
+              `block px-6 py-3 rounded-l-full transition ${isActive ? "bg-[#E5A121] text-white font-semibold shadow-md" : "hover:bg-blue-800"
+              }`
+            }
+          >
+            Question
+          </NavLink>
         </nav>
       </aside>
 
