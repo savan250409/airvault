@@ -13,7 +13,32 @@ interface Question {
     option4: string;
     correct_answer: string;
 }
-
+const sampleJson = `{
+  "questions": [
+    {
+      "question": "What does AWB stand for in air freight?",
+      "marks": 1,
+      "options": [
+        "Airway Bill",
+        "Air Waybill",
+        "Advanced Weight Bill",
+        "Airfreight Weight Booking"
+      ],
+      "correct_answer": "Air Waybill"
+    },
+    {
+      "question": "Which organisation sets international standards for air cargo transport?",
+      "marks": 1,
+      "options": [
+        "WTO",
+        "IATA",
+        "WHO",
+        "IMO"
+      ],
+      "correct_answer": "IATA"
+    }
+  ]
+}`;
 const Questions = () => {
 
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -132,21 +157,35 @@ const Questions = () => {
     };
 
     // ================= BULK =================
+
     const handleBulkUpload = async () => {
         try {
             const parsed = JSON.parse(bulkJson);
 
-            await axios.post(
+            const res = await axios.post(
                 `${BASE_URI}/api/questions/bulk`,
                 parsed
             );
 
-            toast.success("Bulk upload success 🚀");
+            toast.success(res.data.message || "Bulk upload success 🚀");
+
             setBulkJson("");
             fetchQuestions();
 
-        } catch {
-            toast.error("Invalid JSON ❌");
+        } catch (err: any) {
+
+            // ❌ JSON parse error
+            if (err instanceof SyntaxError) {
+                toast.error("Invalid JSON format ❌");
+                return;
+            }
+
+            // ✅ Backend error message
+            if (err.response?.data?.message) {
+                toast.error(err.response.data.message);
+            } else {
+                toast.error("Something went wrong ❌");
+            }
         }
     };
     const handleSetLimit = async () => {
@@ -160,6 +199,24 @@ const Questions = () => {
         } catch (err: any) {
             toast.error(err?.response?.data?.message || "Error");
         }
+    };
+    const handleShowJsonFormat = () => {
+        Swal.fire({
+            title: "JSON Format Example",
+            html: `
+            <pre style="
+                text-align:left;
+                background:#f4f4f4;
+                padding:10px;
+                border-radius:6px;
+                max-height:300px;
+                overflow:auto;
+                font-size:12px;
+            ">${sampleJson}</pre>
+        `,
+            width: 700,
+            confirmButtonText: "Close"
+        });
     };
 
     return (
@@ -263,6 +320,13 @@ const Questions = () => {
                         className="bg-purple-600 text-white px-4 py-2 rounded mt-2"
                     >
                         Upload JSON
+                    </button>
+                    &nbsp;
+                    <button
+                        onClick={handleShowJsonFormat}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
+                        View JSON Format
                     </button>
                 </div>
             )}

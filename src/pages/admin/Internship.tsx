@@ -36,15 +36,20 @@ const InternshipPage = () => {
 
     const fetchInternships = async () => {
         try {
-            const res = await axios.get<{ data: Internship[] }>(
-                `${BASE_URI}/api/internship`
-            );
+            const res = await axios.get(`${BASE_URI}/api/internship`);
+
+            // 👇 add this
+            if (!res.data.status) {
+                console.error(res.data.message);
+                alert(res.data.message);
+                return;
+            }
+
             setData(res.data.data);
         } catch (err) {
             console.error(err);
         }
     };
-
     // ✅ Delete
     const handleDelete = (id: number) => {
         setData(data.filter((item) => item.id !== id));
@@ -209,22 +214,42 @@ const InternshipPage = () => {
                             <div className="mt-4">
                                 <h3 className="font-semibold text-lg mb-2">Test Answers:</h3>
 
-                                {Object.entries(JSON.parse(selectedItem.test_answers)).map(
-                                    ([question, answer]: any, index) => (
-                                        <div
-                                            key={index}
-                                            className="bg-gray-100 p-3 rounded mb-2"
-                                        >
-                                            <p className="text-sm font-medium">
-                                                <strong>Q{index + 1}:</strong> {question}
-                                            </p>
+                                {(() => {
+                                    let parsed;
 
-                                            <p className="text-sm text-green-700">
-                                                <strong>Answer:</strong> {answer}
+                                    try {
+                                        parsed = JSON.parse(selectedItem.test_answers);
+                                    } catch (e) {
+                                        parsed = selectedItem.test_answers;
+                                    }
+
+                                    // 👉 अगर canceled है
+                                    if (parsed === "canceled") {
+                                        return (
+                                            <p className="text-red-600 font-semibold">
+                                                Canceled
                                             </p>
-                                        </div>
-                                    )
-                                )}
+                                        );
+                                    }
+
+                                    // 👉 normal Q/A
+                                    return Object.entries(parsed).map(
+                                        ([question, answer]: any, index) => (
+                                            <div
+                                                key={index}
+                                                className="bg-gray-100 p-3 rounded mb-2"
+                                            >
+                                                <p className="text-sm font-medium">
+                                                    <strong>Q{index + 1}:</strong> {question}
+                                                </p>
+
+                                                <p className="text-sm text-green-700">
+                                                    <strong>Answer:</strong> {answer}
+                                                </p>
+                                            </div>
+                                        )
+                                    );
+                                })()}
                             </div>
                         )}
 

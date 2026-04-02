@@ -1,0 +1,136 @@
+[26-Mar-2026 04:40:32 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php:2
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php(2): mysqli->__construct()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(7): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php on line 2
+[26-Mar-2026 04:40:36 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php:2
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php(2): mysqli->__construct()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(7): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php on line 2
+[26-Mar-2026 04:40:37 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php:2
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php(2): mysqli->__construct()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(7): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php on line 2
+[26-Mar-2026 04:40:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php:2
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php(2): mysqli->__construct()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(7): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/db.php on line 2
+[26-Mar-2026 04:58:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'dev_airvlt.admins' doesn't exist in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php:11
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php(11): mysqli->query()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(23): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php on line 11
+[26-Mar-2026 05:00:29 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'dev_airvlt.admins' doesn't exist in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php:11
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php(11): mysqli->query()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(23): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php on line 11
+[26-Mar-2026 05:03:46 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'dev_airvlt.admins' doesn't exist in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php:11
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php(11): mysqli->query()
+#1 /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/index.php(23): include('/home/xm1lc3d0y...')
+#2 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/de.airvlt.com/api/auth.php on line 11
+[26-Mar-2026 06:51:50 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 06:51:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:20
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 09:43:58 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 09:43:58 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:20
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 09:56:57 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 09:56:57 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:20
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 10:01:05 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 10:01:05 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:20
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 10:10:10 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 11
+[26-Mar-2026 10:10:10 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:11
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 11
+[26-Mar-2026 10:10:10 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 11
+[26-Mar-2026 10:10:10 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:11
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 11
+[26-Mar-2026 10:11:01 UTC] PHP Warning:  Undefined variable $conn in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[26-Mar-2026 10:11:01 UTC] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php:20
+Stack trace:
+#0 /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php(23): include()
+#1 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/internship.php on line 20
+[27-Mar-2026 13:12:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 13:12:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 13:12:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:35:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:35:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:35:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:36:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:37:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:37:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:33
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 33
+[27-Mar-2026 14:40:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 37
+[27-Mar-2026 14:43:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function loginAdmin() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:41
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 41
+[27-Mar-2026 15:53:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function submitTest() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:105
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 105
+[27-Mar-2026 15:54:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function submitTest() in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php:105
+Stack trace:
+#0 {main}
+  thrown in /home/xm1lc3d0ysei/public_html/dev.airvlt.com/api/index.php on line 105

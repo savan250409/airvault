@@ -4,10 +4,16 @@ header("Content-Type: application/json");
 include "db.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
+// echo $method;
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 // ================= CREATE =================
-if ($method === 'POST') {
+
+function createInternship() {
+    global $conn;
+
+    $data = json_decode(file_get_contents("php://input"), true);
 
     $name = $data['name'] ?? '';
     $email = $data['email'] ?? '';
@@ -23,7 +29,7 @@ if ($method === 'POST') {
             "status" => false,
             "message" => "Name, Email and Phone are required"
         ]);
-        exit;
+        return;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -31,7 +37,7 @@ if ($method === 'POST') {
             "status" => false,
             "message" => "Invalid email format"
         ]);
-        exit;
+        return;
     }
 
     // Check duplicate email
@@ -45,7 +51,7 @@ if ($method === 'POST') {
             "status" => false,
             "message" => "Email already exists"
         ]);
-        exit;
+        return;
     }
 
     // Insert
@@ -60,7 +66,7 @@ if ($method === 'POST') {
             "status" => false,
             "message" => "Prepare Error: " . $conn->error
         ]);
-        exit;
+        return;
     }
 
     $stmt->bind_param("sssssss", $name, $email, $phone, $college, $degree, $city, $motivation);
@@ -70,14 +76,7 @@ if ($method === 'POST') {
             "status" => true,
             "message" => "Internship form submitted successfully",
             "data" => [
-                "id" => $stmt->insert_id,
-                "name" => $name,
-                "email" => $email,
-                "phone" => $phone,
-                "college" => $college,
-                "degree" => $degree,
-                "city" => $city,
-                "motivation" => $motivation
+                "id" => $stmt->insert_id
             ]
         ]);
     } else {
@@ -86,8 +85,6 @@ if ($method === 'POST') {
             "message" => "Insert Error: " . $stmt->error
         ]);
     }
-
-    exit;
 }
 
 
@@ -179,13 +176,21 @@ if ($method === 'DELETE') {
 
     exit;
 }
+function submitTest() {
+    global $conn;
 
-
-// ================= SUBMIT TEST =================
-if ($method === 'PUT') {
+    $data = json_decode(file_get_contents("php://input"), true);
 
     $email = $data['email'] ?? '';
     $answers = json_encode($data['answers'] ?? []);
+
+    if (!$email || !$answers) {
+        echo json_encode([
+            "status" => false,
+            "message" => "Email and answers required"
+        ]);
+        return;
+    }
 
     $stmt = $conn->prepare(
         "UPDATE internships SET test_answers = ? WHERE email = ?"
@@ -204,7 +209,5 @@ if ($method === 'PUT') {
             "message" => "Update Error: " . $stmt->error
         ]);
     }
-
-    exit;
 }
 ?>
