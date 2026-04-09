@@ -33,10 +33,12 @@ function setQuestionLimit() {
         "message"=>"Limit saved successfully"
     ]);
 }
+
 function getQuestionLimit() {
     global $conn;
     ensureQuestionLimitColumn();
 
+    // Get question limit
     $res = $conn->query("SELECT question_limit FROM admin ORDER BY id ASC LIMIT 1");
 
     $limit = 10;
@@ -48,9 +50,19 @@ function getQuestionLimit() {
         }
     }
 
+    // Get total number of questions
+    $totalQuestions = 0;
+    $qRes = $conn->query("SELECT COUNT(*) as total FROM questions");
+
+    if ($qRes && $qRes->num_rows > 0) {
+        $qRow = $qRes->fetch_assoc();
+        $totalQuestions = (int)$qRow['total'];
+    }
+
     echo json_encode([
-        "status"=>true,
-        "question_limit"=>$limit
+        "status" => true,
+        "question_limit" => $limit,
+        "total_questions" => $totalQuestions
     ]);
 }
 // ================= CREATE =================
@@ -81,13 +93,7 @@ function createQuestion() {
         return;
     }
 
-    // limit 40
-    // $count = $conn->query("SELECT COUNT(*) as total FROM questions")->fetch_assoc();
-    // if ($count['total'] >= 40) {
-    //     echo json_encode(["status"=>false,"message"=>"Max 40 allowed"]);
-    //     return;
-    // }
-
+    
     $stmt = $conn->prepare("INSERT INTO questions (question, option1, option2, option3, option4, correct_answer) VALUES (?,?,?,?,?,?)");
     $stmt->bind_param("ssssss", $q, $o1, $o2, $o3, $o4, $ans);
     $stmt->execute();
@@ -218,40 +224,39 @@ function bulkInsertQuestions() {
             echo json_encode(["status"=>false,"message"=>"Duplicate: ".$q['question']]);
             return;
         }
+$correct = null;
 
-        $correct = null;
+if (isset($q['correct_answer']) && $q['correct_answer'] !== "") {
 
-        if (isset($q['correct_answer']) && $q['correct_answer'] !== "") {
+    $index = -1;
 
-            $index = -1;
-
-            // number case (1-4)
-            if (is_numeric($q['correct_answer'])) {
-                if (!in_array($q['correct_answer'], [1,2,3,4])) {
-                    echo json_encode(["status"=>false,"message"=>"Invalid correct answer"]);
-                    return;
-                }
-                $index = $q['correct_answer'] - 1;
-            }
-
-            // string case
-            else {
-                foreach ($q['options'] as $i => $opt) {
-                    if (strtolower(trim($opt)) == strtolower(trim($q['correct_answer']))) {
-                        $index = $i;
-                        break;
-                    }
-                }
-
-                if ($index === -1) {
-                    echo json_encode(["status"=>false,"message"=>"Correct answer must match options"]);
-                    return;
-                }
-            }
-
-            $map = ["A","B","C","D"];
-            $correct = $map[$index];
+    // number case (1-4)
+    if (is_numeric($q['correct_answer'])) {
+        if (!in_array($q['correct_answer'], [1,2,3,4])) {
+            echo json_encode(["status"=>false,"message"=>"Invalid correct answer"]);
+            return;
         }
+        $index = $q['correct_answer'] - 1;
+    }
+
+    // string case
+    else {
+        foreach ($q['options'] as $i => $opt) {
+            if (strtolower(trim($opt)) == strtolower(trim($q['correct_answer']))) {
+                $index = $i;
+                break;
+            }
+        }
+
+        if ($index === -1) {
+            echo json_encode(["status"=>false,"message"=>"Correct answer must match options"]);
+            return;
+        }
+    }
+
+    // ✅ store actual answer text
+    $correct = mysqli_real_escape_string($conn, $q['options'][$index]);
+}
 
         // ✅ SQL injection safe (escape)
         $question = mysqli_real_escape_string($conn, $q['question']);

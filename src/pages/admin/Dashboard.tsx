@@ -8,6 +8,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const [internshipCount, setInternshipCount] = useState(0);
+  const [totalQuestions, setTotalQuestions] = useState(0); // ✅ new state
+
 
   const handleLogout = () => {
     localStorage.removeItem("isAdminLoggedIn");
@@ -17,6 +19,7 @@ const Dashboard = () => {
   // ✅ Fetch Internship Count
   useEffect(() => {
     fetchInternshipCount();
+    fetchTotalQuestions();
   }, []);
 
   const fetchInternshipCount = async () => {
@@ -27,16 +30,26 @@ const Dashboard = () => {
       console.error("Error fetching internship count:", error);
     }
   };
+  const fetchTotalQuestions = async () => {
+    try {
+      const res = await axios.get(`${BASE_URI}/api/get-question-limit`);
+      setTotalQuestions(res.data.total_questions || 0);
+    } catch (error) {
+      console.error("Error fetching question count:", error);
+    }
+  };
 
   // ✅ Stats with dynamic internship count
   const stats = [
-    // { title: "Total Services", value: 12, color: "bg-blue-500" },
-    // { title: "Total Blogs", value: 34, color: "bg-[#E5A121]" },
-    // { title: "Case Studies", value: 7, color: "bg-green-500" },
     {
       title: "Internship Users",
       value: internshipCount, // 👈 dynamic value
       color: "bg-blue-900",
+    },
+    {
+      title: "Total Questions", // ✅ new card
+      value: totalQuestions,
+      color: "bg-yellow-600",
     },
   ];
 
@@ -58,6 +71,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+
     </div>
   );
 };

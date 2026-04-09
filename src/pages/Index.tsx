@@ -5,7 +5,7 @@ import StatsSection from "@/components/StatsSection";
 import BlogSection from "@/components/BlogSection";
 import CaseStudies from "@/components/CaseStudies";
 import Footer from "@/components/Footer";
-
+import WhyChooseUs from "@/components/WhyChooseUs";
 import AssociatedAirlines from "@/components/AssociatedAirlines";
 import UniversityCollaborations from "@/components/UniversityCollaborations";
 import FeaturesSection from "@/components/FeaturesSection";
@@ -30,6 +30,7 @@ const Index = () => {
         <AboutSection />
         <AssociatedAirlines />
         <ServicesSection limit={3} />
+        <WhyChooseUs />
         <StatsSection />
         <UniversityCollaborations />
         {/* <CaseStudies /> 

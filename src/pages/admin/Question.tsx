@@ -14,10 +14,10 @@ interface Question {
     correct_answer: string;
 }
 const sampleJson = `{
+ {
   "questions": [
     {
       "question": "What does AWB stand for in air freight?",
-      "marks": 1,
       "options": [
         "Airway Bill",
         "Air Waybill",
@@ -28,7 +28,6 @@ const sampleJson = `{
     },
     {
       "question": "Which organisation sets international standards for air cargo transport?",
-      "marks": 1,
       "options": [
         "WTO",
         "IATA",
@@ -38,6 +37,7 @@ const sampleJson = `{
       "correct_answer": "IATA"
     }
   ]
+}
 }`;
 const Questions = () => {
 
@@ -81,10 +81,12 @@ const Questions = () => {
         fetchLimit(); // 👈 ye add kar
 
     }, []);
+    const [totalQuestions, setTotalQuestions] = useState(0);
     const fetchLimit = async () => {
         try {
             const res = await axios.get(`${BASE_URI}/api/get-question-limit`);
             setLimit(res.data.question_limit || 0);
+            setTotalQuestions(res.data.total_questions || 0);
         } catch {
             toast.error("Failed to fetch limit");
         }
@@ -225,22 +227,30 @@ const Questions = () => {
 
             <h1 className="text-2xl font-bold mb-4">Manage Questions</h1>
             {/* LIMIT SET */}
-            <div className="bg-white p-4 rounded shadow mb-6 flex items-center gap-3">
+            <div className="bg-white p-4 rounded shadow mb-6 flex items-center justify-between">
 
-                <input
-                    type="number"
-                    className="border p-2 w-40"
-                    placeholder="Enter limit"
-                    value={limit}
-                    onChange={(e) => setLimit(Number(e.target.value))}
-                />
+                {/* Left side */}
+                <div className="flex items-center gap-3">
+                    <input
+                        type="number"
+                        className="border p-2 w-40"
+                        placeholder="Enter limit"
+                        value={limit}
+                        onChange={(e) => setLimit(Number(e.target.value))}
+                    />
 
-                <button
-                    onClick={handleSetLimit}
-                    className="bg-green-600 text-white px-4 py-2 rounded"
-                >
-                    Set Limit
-                </button>
+                    <button
+                        onClick={handleSetLimit}
+                        className="bg-green-600 text-white px-4 py-2 rounded"
+                    >
+                        Set Limit
+                    </button>
+                </div>
+
+                {/* Right side */}
+                <div className="text-gray-700 font-semibold">
+                    Total Questions: <span className="text-blue-600">{totalQuestions}</span>
+                </div>
 
             </div>
 

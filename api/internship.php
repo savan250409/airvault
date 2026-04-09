@@ -101,11 +101,71 @@ if ($method === 'GET' && !isset($_GET['id'])) {
         exit;
     }
 
-    $dataArr = [];
-    while ($row = $result->fetch_assoc()) {
-        $dataArr[] = $row;
+    // ✅ Step 1: All questions + answers ek baar me load (optimization 🔥)
+    $questionMap = [];
+    $qRes = $conn->query("SELECT question, correct_answer FROM questions");
+
+    while ($qRow = $qRes->fetch_assoc()) {
+        $questionMap[strtolower(trim($qRow['question']))] = strtolower(trim($qRow['correct_answer']));
     }
 
+$dataArr = [];
+
+while ($row = $result->fetch_assoc()) {
+
+    $answers = json_decode($row['test_answers'], true);
+
+    $correct = 0;
+    $incorrect = 0;
+    $skipped = 0;
+
+    $questionResults = []; // ✅ NEW
+
+    if ($answers && is_array($answers)) {
+        foreach ($answers as $question => $userAnswer) {
+
+            $qKey = strtolower(trim($question));
+
+            if (isset($questionMap[$qKey])) {
+
+                $correctAnswer = $questionMap[$qKey];
+
+                // ✅ Skip
+                if ($userAnswer === "Skipped" || $userAnswer === "Skip") {
+                    $skipped++;
+                    $questionResults[$question] = "skipped";
+                } 
+                // ✅ Correct
+                else if (strtolower(trim($userAnswer)) === $correctAnswer) {
+                    $correct++;
+                    $questionResults[$question] = "correct";
+                } 
+                // ❌ Incorrect
+                else {
+                    $incorrect++;
+                    $questionResults[$question] = "incorrect";
+                }
+            }
+        }
+    }
+
+    // ✅ Pass / Fail
+    $resultStatus = ($correct >= 15) ? "Pass" : "Fail";
+
+    // ✅ Attach result
+    $row['result'] = [
+        "correct" => $correct,
+        "incorrect" => $incorrect,
+        "skipped" => $skipped,
+        "status" => $resultStatus
+    ];
+
+    // ✅ Attach per-question result
+    $row['question_results'] = $questionResults;
+
+    $dataArr[] = $row;
+}
+    
     echo json_encode([
         "status" => true,
         "count" => count($dataArr),

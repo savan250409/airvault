@@ -120,52 +120,7 @@ const Internship = () => {
             }
         }).then(async (result) => {
 
-            // if (result.isConfirmed) {
-            //     try {
-            //         setLoading(true); // ✅ loader start
 
-            //         await axios.post(`${BASE_URI}/api/internship`, form);
-
-            //         // ✅ SUCCESS TOAST (top right)
-            //         Swal.fire({
-            //             toast: true,
-            //             position: "top-end",
-            //             icon: "success",
-            //             title: "Form submitted successfully!",
-            //             showConfirmButton: false,
-            //             timer: 2000,
-            //         });
-
-            //         await fetchQuestionsFromAPI();
-
-            //         setSubmitted(true);
-            //         sessionStorage.setItem("testStarted", "true");
-            //         setLoading(false);
-
-            //     } catch (error) {
-            //         setLoading(false); // ❌ loader stop
-
-            //         let errorMessage = "Something went wrong";
-
-            //         // ✅ backend message (duplicate email etc)
-            //         if (error.response?.data?.message) {
-            //             errorMessage = error.response.data.message;
-            //         }
-
-            //         // 🔥 ERROR TOAST (top right)
-            //         Swal.fire({
-            //             toast: true,
-            //             position: "top-end",
-            //             icon: "error",
-            //             title: errorMessage,
-            //             showConfirmButton: false,
-            //             timer: 3000,
-            //         });
-            //     }
-
-            // } else {
-            //     setLoading(false); // cancel pe loader band
-            // }
             if (result.isConfirmed) {
                 try {
                     setLoading(true);
@@ -386,7 +341,7 @@ const Internship = () => {
             const formattedAnswers = {};
 
             questions.forEach((q, index) => {
-                formattedAnswers[q.question] = answers[index] || "Skip";
+                formattedAnswers[q.question] = answers[index] || "Skipped";
             });
 
             const isAlreadySubmitted = false; // backend ya state se decide karo

@@ -167,52 +167,6 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Track Parcel Box */}
-          {/* <div className="relative w-full max-w-md mx-auto lg:mx-0 lg:ml-auto animate-fade-in-right mt-8 lg:mt-0">
-            <Card className="w-full bg-white/95 backdrop-blur-md shadow-2xl border-t-4 border-t-primary transform hover:scale-[1.02] transition-transform duration-300">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-2xl font-bold flex items-center gap-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Truck className="h-6 w-6 text-primary" />
-                  </div>
-                  Track Your Shipment
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <p className="text-muted-foreground text-sm">
-                  Enter your tracking number to get real-time updates on your cargo status.
-                </p>
-                <div className="space-y-4">
-                  <div className="relative group">
-                    <Search className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                    <Input
-                      placeholder="Enter Tracking Number"
-                      className="pl-10 h-12 border-muted hover:border-primary focus:border-primary transition-colors bg-white"
-                      value={trackingNumber}
-                      onChange={(e) => setTrackingNumber(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleTrack()}
-                    />
-                  </div>
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
-                  <Button
-                    className="w-full h-12 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-                    size="lg"
-                    onClick={handleTrack}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Tracking...
-                      </>
-                    ) : (
-                      "Track Parcel"
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div> */}
         </div>
       </div>
 
