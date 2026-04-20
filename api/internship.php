@@ -113,8 +113,9 @@ $dataArr = [];
 
 while ($row = $result->fetch_assoc()) {
 
-    $answers = json_decode($row['test_answers'], true);
-
+    $answers = !empty($row['test_answers']) 
+    ? json_decode($row['test_answers'], true) 
+    : [];
     $correct = 0;
     $incorrect = 0;
     $skipped = 0;

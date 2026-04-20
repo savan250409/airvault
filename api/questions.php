@@ -175,13 +175,12 @@ function deleteQuestion($id) {
 
     echo json_encode(["status"=>true,"message"=>"Deleted"]);
 }
-
 // ================= BULK INSERT =================
 function bulkInsertQuestions() {
     global $conn;
     $data = getBody();
 
-    // ✅ अगर single object आया है (admin panel)
+    // ✅ Single object support
     if (!isset($data['questions']) && isset($data['question'])) {
         $data['questions'] = [[
             "question" => $data['question'],
@@ -206,78 +205,96 @@ function bulkInsertQuestions() {
     $res = $conn->query("SELECT question FROM questions");
 
     while($row = $res->fetch_assoc()){
-        $existing[] = strtolower($row['question']);
+        $existing[] = strtolower(trim($row['question']));
     }
 
-    $values = [];
+    $duplicates = [];
+    $inserted = 0;
 
-    foreach ($data['questions'] as $q) {
+    // ✅ Batch (10-10 insert)
+    $chunks = array_chunk($data['questions'], 10);
 
-        if (!isset($q['question']) || !isset($q['options']) || count($q['options']) != 4) {
-            echo json_encode(["status"=>false,"message"=>"Each must have 4 options"]);
-            return;
-        }
+    foreach ($chunks as $batch) {
 
-        $qText = strtolower($q['question']);
+        $values = [];
 
-        if (in_array($qText, $existing)) {
-            echo json_encode(["status"=>false,"message"=>"Duplicate: ".$q['question']]);
-            return;
-        }
-$correct = null;
+        foreach ($batch as $q) {
 
-if (isset($q['correct_answer']) && $q['correct_answer'] !== "") {
-
-    $index = -1;
-
-    // number case (1-4)
-    if (is_numeric($q['correct_answer'])) {
-        if (!in_array($q['correct_answer'], [1,2,3,4])) {
-            echo json_encode(["status"=>false,"message"=>"Invalid correct answer"]);
-            return;
-        }
-        $index = $q['correct_answer'] - 1;
-    }
-
-    // string case
-    else {
-        foreach ($q['options'] as $i => $opt) {
-            if (strtolower(trim($opt)) == strtolower(trim($q['correct_answer']))) {
-                $index = $i;
-                break;
+            if (!isset($q['question']) || !isset($q['options']) || count($q['options']) != 4) {
+                continue; // skip invalid
             }
+
+            $qText = strtolower(trim($q['question']));
+
+            // ✅ Duplicate check
+            if (in_array($qText, $existing)) {
+                $duplicates[] = $q['question'];
+                continue;
+            }
+
+            $correct = null;
+
+            if (isset($q['correct_answer']) && $q['correct_answer'] !== "") {
+
+                $index = -1;
+
+                // number case (1-4)
+                if (is_numeric($q['correct_answer'])) {
+                    if (!in_array($q['correct_answer'], [1,2,3,4])) {
+                        continue;
+                    }
+                    $index = $q['correct_answer'] - 1;
+                }
+
+                // string case
+                else {
+                    foreach ($q['options'] as $i => $opt) {
+                        if (strtolower(trim($opt)) == strtolower(trim($q['correct_answer']))) {
+                            $index = $i;
+                            break;
+                        }
+                    }
+
+                    if ($index === -1) {
+                        continue;
+                    }
+                }
+
+                $map = ["A","B","C","D"];
+                $correct = $map[$index];
+            }
+
+            // escape
+            $question = mysqli_real_escape_string($conn, $q['question']);
+            $opt1 = mysqli_real_escape_string($conn, $q['options'][0]);
+            $opt2 = mysqli_real_escape_string($conn, $q['options'][1]);
+            $opt3 = mysqli_real_escape_string($conn, $q['options'][2]);
+            $opt4 = mysqli_real_escape_string($conn, $q['options'][3]);
+
+            $correctVal = $correct ? "'".$correct."'" : "NULL";
+
+            $values[] = "('$question','$opt1','$opt2','$opt3','$opt4',$correctVal)";
+            $existing[] = $qText;
+            $inserted++;
         }
 
-        if ($index === -1) {
-            echo json_encode(["status"=>false,"message"=>"Correct answer must match options"]);
-            return;
+        // execute batch
+        if (!empty($values)) {
+            $sql = "INSERT INTO questions 
+            (question, option1, option2, option3, option4, correct_answer) 
+            VALUES ".implode(",", $values);
+
+            $conn->query($sql);
         }
     }
 
-    // ✅ store actual answer text
-    $correct = mysqli_real_escape_string($conn, $q['options'][$index]);
-}
-
-        // ✅ SQL injection safe (escape)
-        $question = mysqli_real_escape_string($conn, $q['question']);
-        $opt1 = mysqli_real_escape_string($conn, $q['options'][0]);
-        $opt2 = mysqli_real_escape_string($conn, $q['options'][1]);
-        $opt3 = mysqli_real_escape_string($conn, $q['options'][2]);
-        $opt4 = mysqli_real_escape_string($conn, $q['options'][3]);
-
-        $correctVal = $correct ? "'".$correct."'" : "NULL";
-
-        $values[] = "('$question','$opt1','$opt2','$opt3','$opt4',$correctVal)";
-        $existing[] = $qText;
-    }
-
-    $sql = "INSERT INTO questions 
-    (question, option1, option2, option3, option4, correct_answer) 
-    VALUES ".implode(",", $values);
-
-    if ($conn->query($sql)) {
-        echo json_encode(["status"=>true,"message"=>"Insert success"]);
-    } else {
-        echo json_encode(["status"=>false,"message"=>"DB Error"]);
-    }
+    // ✅ Final response
+    echo json_encode([
+        "status" => true,
+        "message" => count($duplicates) 
+            ? "Some questions were duplicate" 
+            : "All questions inserted successfully",
+        "inserted" => $inserted,
+        "duplicates" => $duplicates
+    ]);
 }

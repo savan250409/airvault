@@ -102,7 +102,7 @@ elseif ($module === "internship") {
         getInternshipById($action); // GET /internship/:id
     }
     elseif ($_SERVER['REQUEST_METHOD'] == "POST" && $action === "submit-test") {
-        submitTest(); // PUT /internship/submit-test
+        submitTest(); // POST /internship/submit-test
     }
     else {
         echo json_encode([

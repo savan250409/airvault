@@ -92,8 +92,48 @@ function logoutAdmin() {
 
 // ---------------- UPDATE PROFILE ----------------
 function updateAdminProfile() {
-    echo json_encode([
-        "status" => true,
-        "message" => "Profile updated"
-    ]);
+    global $conn;
+
+    $data = getBody();
+
+    $email = $data['email'] ?? '';
+    $password = $data['password'] ?? '';
+
+    // Validation
+    if (!$email || !$password) {
+        echo json_encode([
+            "status" => false,
+            "message" => "Email and Password are required"
+        ]);
+        return;
+    }
+
+    // Check email exists
+    $check = $conn->query("SELECT * FROM admin WHERE email='$email'");
+
+    if ($check->num_rows == 0) {
+        echo json_encode([
+            "status" => false,
+            "message" => "Email not found"
+        ]);
+        return;
+    }
+
+    // Hash password
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+    // Update password
+    $update = $conn->query("UPDATE admin SET password='$hashedPassword' WHERE email='$email'");
+
+    if ($update) {
+        echo json_encode([
+            "status" => true,
+            "message" => "Password updated successfully"
+        ]);
+    } else {
+        echo json_encode([
+            "status" => false,
+            "message" => "Update failed"
+        ]);
+    }
 }
