@@ -597,7 +597,7 @@ const [selectedOption, setSelectedOption] = useState(null);
             alt="Internship"
             className="w-full h-[350px] md:h-[450px] rounded-2xl shadow-lg object-cover"
           />
-          <div className="absolute -bottom-3 -left-12 w-24 h-24 bg-[#E5A121] rounded-xl opacity-30 "></div>
+          {/* <div className="absolute -bottom-3 -left-12 w-24 h-24 bg-[#E5A121] rounded-xl opacity-30 "></div> */}
         </div>
 
       </div>
