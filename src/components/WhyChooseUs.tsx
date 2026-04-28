@@ -6,40 +6,41 @@ const WhyChooseUs = () => {
                 {/* Left Content */}
                 <div>
                     <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-6">
-                        Why Choose Airvault for Internship?
+                        ✈️Why Choose Airvault for Internship?
                     </h2>
 
                     <p className="text-gray-600 mb-6 leading-relaxed">
-                        At Airvault, we deliver more than just logistics — we deliver trust, safety,
+                        {/* At Airvault, we deliver more than just logistics — we deliver trust, safety,
                         and reliability. With a strong network across land, air, and sea, we ensure
-                        your cargo reaches its destination securely and on time.
+                        your cargo reaches its destination securely and on time. */}
+                        At Airvault , we give interns a chance to learn real work, not just theory. You will get practical experience in aviation and cargo services while working with a professional team.
                     </p>
 
                     <ul className="space-y-3">
                         <li className="flex items-start gap-3">
                             <span className="text-[#E5A121] text-xl">✔</span>
-                            <p> Safe & secure cargo handling</p>
+                            <p> Hands-on experience with real industry projects</p>
                         </li>
 
                         <li className="flex items-start gap-3">
                             <span className="text-[#E5A121] text-xl">✔</span>
-                            <p>On-time delivery you can rely on </p>
+                            <p>Learn from experienced professionals</p>
                         </li>
 
                         <li className="flex items-start gap-3">
                             <span className="text-[#E5A121] text-xl">✔</span>
-                            <p>Global logistics network
+                            <p>Supportive and growth-focused environment
                             </p>
                         </li>
 
                         <li className="flex items-start gap-3">
                             <span className="text-[#E5A121] text-xl">✔</span>
-                            <p>Advanced tracking & transparency  </p>
+                            <p>Opportunity to build practical skills  </p>
                         </li>
 
                         <li className="flex items-start gap-3">
                             <span className="text-[#E5A121] text-xl">✔</span>
-                            <p>Dedicated customer support  </p>
+                            <p>Chance to start your career with Airvault  </p>
                         </li>
                     </ul>
                 </div>
@@ -47,7 +48,7 @@ const WhyChooseUs = () => {
                 {/* Right Image */}
                 <div className="relative">
                     <img
-                        src="uploads/service/image/internship.jpg" // apni image path yaha change karo
+                        src="/uploads/service/image/internship.jpg" // apni image path yaha change karo
                         alt="Airvault Internship"
                         className="rounded-2xl shadow-lg w-full object-cover"
                     />

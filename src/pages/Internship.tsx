@@ -23,6 +23,8 @@ const Internship = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState({});
     const [timeLeft, setTimeLeft] = useState(60);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+const [selectedOption, setSelectedOption] = useState(null);
     const [lockedQuestions, setLockedQuestions] = useState({});
     const [showConfetti, setShowConfetti] = useState(false);
 
@@ -204,25 +206,38 @@ const Internship = () => {
         }
     }, []);
     // ✅ TIMER
+    // useEffect(() => {
+    //     if (!submitted) return;
+
+    //     if (timeLeft === 0) {
+    //         if (currentIndex === questions.length - 1) {
+    //             handleFinalSubmit();
+    //         } else {
+    //             handleNext();
+    //         }
+    //         return;
+    //     }
+    //     const timer = setTimeout(() => {
+    //         setTimeLeft((prev) => prev - 1);
+    //     }, 1000);
+
+    //     return () => clearTimeout(timer);
+    // }, [timeLeft, submitted, currentIndex]);
+
     useEffect(() => {
-        if (!submitted) return;
+    if (!submitted) return;
 
-        if (timeLeft === 0) {
-            if (currentIndex === questions.length - 1) {
-                handleFinalSubmit();
-            } else {
-                handleNext();
-            }
-            return;
-        }
+    if (timeLeft === 0) {
+        handleAutoSkip(); // 🔥 NEW
+        return;
+    }
 
-        const timer = setTimeout(() => {
-            setTimeLeft((prev) => prev - 1);
-        }, 1000);
+    const timer = setTimeout(() => {
+        setTimeLeft((prev) => prev - 1);
+    }, 1000);
 
-        return () => clearTimeout(timer);
-    }, [timeLeft, submitted, currentIndex]);
-
+    return () => clearTimeout(timer);
+}, [timeLeft, submitted, currentIndex]);
 
     useEffect(() => {
         if (!submitted || testCompleted) return;
@@ -473,6 +488,34 @@ const Internship = () => {
             handleFinalSubmit();
         }
     };
+
+    const handleAutoSkip = () => {
+
+    // agar answer already diya hai → normal next
+    if (answers[currentIndex]) {
+        handleNext();
+        return;
+    }
+
+    // ❗ answer nahi hai → auto skip
+    setAnswers((prev) => ({
+        ...prev,
+        [currentIndex]: "Skipped"
+    }));
+
+    setLockedQuestions((prev) => ({
+        ...prev,
+        [currentIndex]: true,
+    }));
+
+    setTimeLeft(60);
+
+    if (currentIndex < questions.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+    } else {
+        handleFinalSubmit();
+    }
+};
     return (
         <>
             {/* 🎉 CONFETTI TOP PE */}
@@ -493,41 +536,103 @@ const Internship = () => {
             {/* GLOBAL HEADER */}
             {!submitted && <Header />}
 
-            <div className="min-h-screen bg-[#f5f7fc] py-10 px-6">
-                <div className="w-full bg-white rounded-xl shadow">
+            <div className="min-h-screen bg-[#f5f7f] py-10 px-6">
+                <div className="w-full bg-white rounded-xl ">
 
                     {/* PAGE HEADER */}
                     {/* <div className="bg-[#0057b8] text-white px-8 py-6 rounded-t-xl">
                         <h1 className="text-xl font-semibold">Internship Application</h1>
                     </div> */}
-                    <div className="bg-[#0d2dd0] text-white p-6 rounded-t-xl">
-                        <div className="flex justify-between items-center">
+  <div className="bg-white py-0">  {/* 👉 Parent background white */}
 
-                            {/* LEFT SIDE */}
-                            <div>
-                                <h1 className="text-lg font-bold">Airvault Express</h1>
-                                <p className="text-xs opacity-80">AND LOGISTICS PVT. LTD.</p>
-                            </div>
+  {/* SECTION 1 */}
+ {/* SECTION 1 */}
+{!submitted && (
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="bg-white p-4 rounded-xl border shadow-sm ">
+      <div className="grid md:grid-cols-2 gap-10 items-center">
 
-                            {/* RIGHT SIDE TIMER */}
-                            {submitted && (
-                                <div className="text-right">
-                                    <p className="text-sm">Time Left</p>
-                                    <p className="text-2xl font-bold">⏱ {timeLeft}s</p>
-                                </div>
-                            )}
+        {/* LEFT */}
+        <div>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#2d4b8c] mb-4">
+           ✈️ Why Choose Airvault for Internship?
+          </h2>
 
-                        </div>
-                    </div>
+          <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed max-w-md">
+            At Airvault, we focus on helping interns grow with real experience and practical learning. Our internship program is designed to give you industry knowledge, confidence, and skills that will help in your future career.
+          </p>
 
-                    <div className="bg-[#FFF4E6] border border-[#eca53a] px-6 py-4">
-                        <h2 className="font-semibold text-sm mb-1">
-                            Internship Application & Aptitude Test
-                        </h2>
-                        <p className="text-xs text-gray-600">
-                            This test evaluates your knowledge of air freight, logistics, and supply chain concepts.
-                        </p>
-                    </div>
+          <ul className="space-y-3 text-gray-700 text-sm md:text-base">
+          <li className="flex items-start gap-3">
+   <span className="text-[#E5A121] text-lg">✔</span> 
+   <p>Work on real-time projects and gain practical experience</p>
+</li>
+<li className="flex items-start gap-3">
+   <span className="text-[#E5A121] text-lg">✔</span> 
+   <p>Learn industry processes in aviation and logistics</p>
+</li>
+<li className="flex items-start gap-3">
+   <span className="text-[#E5A121] text-lg">✔</span> 
+   <p>Get guidance from experienced team members</p>
+</li>
+<li className="flex items-start gap-3">
+   <span className="text-[#E5A121] text-lg">✔</span> 
+   <p>Build confidence and improve communication skills</p>
+</li>
+<li className="flex items-start gap-3">
+   <span className="text-[#E5A121] text-lg">✔</span> 
+   <p>Opportunity to grow and explore full-time career options</p>
+</li>
+
+
+
+           
+          </ul>
+        </div>
+
+        {/* RIGHT IMAGE */}
+        <div className="relative flex justify-center md:justify-end">
+          <img
+            src="/uploads/service/image/intership_form.png"
+            alt="Internship"
+            className="w-full h-[350px] md:h-[450px] rounded-2xl shadow-lg object-cover"
+          />
+          <div className="absolute -bottom-3 -left-12 w-24 h-24 bg-[#E5A121] rounded-xl opacity-30 "></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+)}
+  {/* 👉 GAP (clean white space) */}
+  <div className="h-8"></div>
+
+  {/* SECTION 2 */}
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="bg-[#FFF4E6] border border-[#eca53a] py-4 px-6 rounded-xl flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+
+      {/* LEFT CONTENT */}
+      <div>
+        <h2 className="font-semibold text-sm mb-1">
+          Internship Application & Aptitude Test
+        </h2>
+        <p className="text-xs text-gray-600">
+          This test evaluates your knowledge of air freight, logistics, and supply chain concepts.
+        </p>
+      </div>
+
+      {/* ⏱ TIMER */}
+     {submitted && !testCompleted && (
+  <div className="text-right">
+    <p className="text-sm text-gray-700">Time Left</p>
+    <p className="text-xl font-bold text-red-600">⏱ {timeLeft}s</p>
+  </div>
+)}
+
+    </div>
+  </div>
+
+</div>
 
                     {/* <div className="bg-[#eca53a] text-white px-6 py-2 text-xs">
                         ⭐ Eligibility clause: Only candidates scoring <b>30 or above out of 40</b> are eligible.
@@ -539,7 +644,7 @@ const Internship = () => {
                     )}
 
                     {!submitted && (
-                        <form onSubmit={handleSubmit} className="p-8">
+                        <form onSubmit={handleSubmit} className="p-8 max-w-7xl mx-auto px-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                                 {/* NAME */}

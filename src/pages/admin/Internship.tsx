@@ -90,7 +90,7 @@ const InternshipPage = () => {
                             <th className="px-6 py-3 text-left">Name</th>
                             <th className="px-6 py-3 text-left">Email</th>
                             <th className="px-6 py-3 text-left">Phone</th>
-                            <th className="px-6 py-3 text-left">College</th>
+                            {/* <th className="px-6 py-3 text-left">College</th> */}
                             <th className="px-6 py-3 text-left">Degree</th>
                             <th className="px-6 py-3 text-left">City</th>
                             <th className="px-6 py-3 text-left">Result</th>
@@ -106,7 +106,7 @@ const InternshipPage = () => {
                                     <td className="px-6 py-3 font-semibold">{item.name}</td>
                                     <td className="px-6 py-3">{item.email}</td>
                                     <td className="px-6 py-3">{item.phone}</td>
-                                    <td className="px-6 py-3">{item.college}</td>
+                                    {/* <td className="px-6 py-3">{item.college}</td> */}
                                     <td className="px-6 py-3">{item.degree}</td>
                                     <td className="px-6 py-3">{item.city}</td>
                                     <td className="px-6 py-3 text-center">
@@ -262,12 +262,15 @@ const InternshipPage = () => {
                                             <div className="font-bold">{selectedItem.result.skipped}</div>
                                         </div>
 
-                                        <div className={`p-2 rounded text-center text-white ${selectedItem.result.status === "Pass"
-                                            ? "bg-green-600"
-                                            : "bg-red-500"
-                                            }`}>
-                                            {selectedItem.result.status}
-                                        </div>
+                                        <div
+  className={`p-2 flex items-center justify-center text-white ${
+    selectedItem.result.status === "Pass"
+      ? "bg-green-600"
+      : "bg-red-500"
+  }`}
+>
+  {selectedItem.result.status}
+</div>
 
                                     </div>
                                 </div>
