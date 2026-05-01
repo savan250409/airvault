@@ -13,7 +13,7 @@ const WhyChooseUs = () => {
                         {/* At Airvault, we deliver more than just logistics — we deliver trust, safety,
                         and reliability. With a strong network across land, air, and sea, we ensure
                         your cargo reaches its destination securely and on time. */}
-                        At Airvault , we give interns a chance to learn real work, not just theory. You will get practical experience in aviation and cargo services while working with a professional team.
+                       At Airvault, we give interns the opportunity to work on real-world projects in international import and export freight forwarding cargo, gaining practical industry experience with a professional team.
                     </p>
 
                     <ul className="space-y-3">

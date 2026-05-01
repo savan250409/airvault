@@ -559,7 +559,7 @@ const [selectedOption, setSelectedOption] = useState(null);
           </h2>
 
           <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed max-w-md">
-            At Airvault, we focus on helping interns grow with real experience and practical learning. Our internship program is designed to give you industry knowledge, confidence, and skills that will help in your future career.
+            At Airvault, we give interns the opportunity to work on real-world projects in international import and export freight forwarding cargo, gaining practical industry experience with a professional team.
           </p>
 
           <ul className="space-y-3 text-gray-700 text-sm md:text-base">

@@ -62,7 +62,7 @@ const AdminLogin = () => {
         {/* Logo */}
         <div className="bg-[#0B41E3] p-2 rounded mb-6 mx-auto w-[200px] h-[80px] flex items-center justify-center">
           <img
-            src="/public/logo.webp"
+            src="/logo.webp"
             alt="Logo"
             className="w-[200px] h-[200px] object-contain"
           />

@@ -82,7 +82,7 @@ const AdminLayout = () => {
       >
         {/* Logo */}
         <div className="p-6 flex justify-center border-b border-blue-700">
-          <img src="/public/Logo.webp" alt="Admin Logo" className="h-16 w-auto object-contain" />
+          <img src="/logo.webp" alt="Admin Logo" className="h-16 w-auto object-contain" />
         </div>
 
         {/* Navigation */}
