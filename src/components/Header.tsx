@@ -39,7 +39,8 @@ const Header = () => {
             <img
               src="/airvlt_logo_v3.png"
               alt="Logo"
-              className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
+               className="h-16 sm:h-16 lg:h-16 w-auto object-contain"
+
             />
           </Link>
 

@@ -536,7 +536,7 @@ const [selectedOption, setSelectedOption] = useState(null);
             {/* GLOBAL HEADER */}
             {!submitted && <Header />}
 
-            <div className="min-h-screen bg-[#f5f7f] py-10 px-6">
+            <div className="min-h-screen bg-[#f5f7f] py-10 px-0">
                 <div className="w-full bg-white rounded-xl ">
 
                     {/* PAGE HEADER */}
@@ -548,60 +548,62 @@ const [selectedOption, setSelectedOption] = useState(null);
   {/* SECTION 1 */}
  {/* SECTION 1 */}
 {!submitted && (
-  <div className="max-w-7xl mx-auto px-6">
-    <div className="bg-white p-4 rounded-xl border shadow-sm ">
-      <div className="grid md:grid-cols-2 gap-10 items-center">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <div className="bg-white p-4 sm:p-6 rounded-xl border shadow-sm">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-center">
 
         {/* LEFT */}
-        <div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#2d4b8c] mb-4">
-           ✈️ Why Choose Airvault for Internship?
-          </h2>
+        <div className="text-center md:text-left">
 
-          <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed max-w-md">
-            At Airvault, we give interns the opportunity to work on real-world projects in international import and export freight forwarding cargo, gaining practical industry experience with a professional team.
-          </p>
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#2d4b8c] mb-4 leading-snug text-left">
+  ✈️ Why Choose Airvault for Internship?
+</h2>
 
-          <ul className="space-y-3 text-gray-700 text-sm md:text-base">
-          <li className="flex items-start gap-3">
-   <span className="text-[#E5A121] text-lg">✔</span> 
-   <p>Work on real-time projects and gain practical experience</p>
-</li>
-<li className="flex items-start gap-3">
-   <span className="text-[#E5A121] text-lg">✔</span> 
-   <p>Learn industry processes in aviation and logistics</p>
-</li>
-<li className="flex items-start gap-3">
-   <span className="text-[#E5A121] text-lg">✔</span> 
-   <p>Get guidance from experienced team members</p>
-</li>
-<li className="flex items-start gap-3">
-   <span className="text-[#E5A121] text-lg">✔</span> 
-   <p>Build confidence and improve communication skills</p>
-</li>
-<li className="flex items-start gap-3">
-   <span className="text-[#E5A121] text-lg">✔</span> 
-   <p>Opportunity to grow and explore full-time career options</p>
-</li>
+<p className="text-gray-600 mb-5 sm:mb-6 text-sm sm:text-base leading-relaxed max-w-md text-left">
+  At Airvault, we give interns the opportunity to work on real-world projects in international import and export freight forwarding cargo, gaining practical industry experience with a professional team.
+</p>
 
+          <ul className="space-y-3 text-gray-700 text-sm sm:text-base">
 
+  {[
+    "Work on real-time projects and gain practical experience",
+    "Learn industry processes in aviation and logistics",
+    "Get guidance from experienced team members",
+    "Build confidence and improve communication skills",
+    "Opportunity to grow and explore full-time career options"
+  ].map((item, i) => (
+    <li key={i} className="flex items-start gap-3">
 
-           
-          </ul>
+      <span className="text-[#E5A121] text-base sm:text-lg mt-[2px]">✔</span>
+
+      <p className="text-left">{item}</p>
+
+    </li>
+  ))}
+
+</ul>
+
         </div>
 
         {/* RIGHT IMAGE */}
         <div className="relative flex justify-center md:justify-end">
+
           <img
             src="/uploads/service/image/intership_form.png"
             alt="Internship"
-            className="w-full h-[350px] md:h-[450px] rounded-2xl shadow-lg object-cover"
+            className="w-full max-w-sm sm:max-w-md md:max-w-full 
+                       h-[250px] sm:h-[320px] md:h-[400px] lg:h-[450px] 
+                       rounded-2xl shadow-lg object-cover"
           />
-          {/* <div className="absolute -bottom-3 -left-12 w-24 h-24 bg-[#E5A121] rounded-xl opacity-30 "></div> */}
+
         </div>
 
       </div>
+
     </div>
+
   </div>
 )}
   {/* 👉 GAP (clean white space) */}

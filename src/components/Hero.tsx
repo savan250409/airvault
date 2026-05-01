@@ -113,210 +113,88 @@ const Hero = () => {
   const history = trackingData ? getHistory(trackingData) : [];
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        {backgroundImages.map((img, index) => (
-          <img
-            key={index}
-            src={img}
-            alt={`Professional logistics operations background ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentBgIndex ? "opacity-100" : "opacity-0"
-              }`}
-          />
+ <section className="relative min-h-screen flex items-center overflow-hidden">
+
+  {/* Background */}
+  <div className="absolute inset-0 z-0">
+    {backgroundImages.map((img, i) => (
+      <img
+        key={i}
+        src={img}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          i === currentBgIndex ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    ))}
+
+    {/* LIGHT WHITE OVERLAY (IMPORTANT) */}
+    <div className="absolute inset-0 bg-white/85"></div>
+  </div>
+
+  {/* Content */}
+  <div className="relative z-10 w-full px-4 sm:px-6 lg:px-16 py-16">
+    <div className="max-w-6xl">
+
+      {/* Badge */}
+      <div className="mb-6">
+        <span className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold border border-orange-200">
+          🚀 Leading Logistics Solutions
+        </span>
+      </div>
+
+      {/* Heading */}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+        <span className="text-blue-600">Safe & Reliable</span>
+        <br />
+        <span className="text-gray-800">Logistic Solutions</span>
+      </h1>
+
+      {/* Description */}
+      <p className="text-gray-600 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed mb-10">
+        Experience world-class logistics services with our comprehensive transport
+        solutions. From land to sea to air, we deliver your cargo safely and on time,
+        every time.
+      </p>
+
+      {/* Tracking */}
+      {/* <div className="flex flex-col sm:flex-row gap-3 max-w-md mb-10">
+        <Input
+          placeholder="Enter Tracking Number"
+          value={trackingNumber}
+          onChange={(e) => setTrackingNumber(e.target.value)}
+        />
+        <Button onClick={handleTrack} disabled={isLoading}>
+          {isLoading ? <Loader2 className="animate-spin" /> : "Track"}
+        </Button>
+      </div> */}
+
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl">
+
+        {stats.map((stat, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 bg-white shadow-md p-4 rounded-xl border border-gray-100"
+          >
+            <div className="p-2 bg-blue-50 rounded-full">
+              <stat.icon className="w-5 h-5 text-blue-600" />
+            </div>
+
+            <div>
+              <p className="text-gray-900 font-bold text-lg">{stat.value}</p>
+              <p className="text-xs text-gray-500">{stat.label}</p>
+            </div>
+          </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/70"></div>
+
       </div>
 
-      {/* Content */}
-      <div className="relative z-10  py-20">
-        <div className="grid gap-12 items-center">
-          <div className="space-y-8 animate-slide-left pl-28">
-            <div className="space-y-6">
-              <div className="inline-block">
-                <span className="bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-semibold border border-secondary/20">
-                  🚀 Leading Logistics Solutions
-                </span>
-              </div>
+    </div>
+  </div>
 
-              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                <span className="text-[#0D2DD0]">Safe & Reliable</span>
-                <br />
-                <span className="text-foreground">Logistic Solutions</span>
-              </h1>
-
-              <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                Experience world-class logistics services with our comprehensive transport
-                solutions. From land to sea to air, we deliver your cargo safely and on time,
-                every time.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
-                <div key={index} className="flex items-center space-x-4 bg-white/50 backdrop-blur-sm p-3 rounded-lg border border-white/20">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <stat.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Tracking Result Modal */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col w-[95vw] border-none shadow-2xl bg-white/95 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-300 p-0 rounded-2xl">
-          <DialogHeader className="p-6 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b shrink-0">
-            <DialogTitle className="text-2xl font-bold text-primary flex items-center gap-2">
-              <Truck className="h-6 w-6" />
-              Shipment Details
-            </DialogTitle>
-          </DialogHeader>
-
-          <div className="overflow-y-auto flex-1 p-6 space-y-8 custom-scrollbar">
-            {trackingData && (
-              <>
-                {/* Basic Info Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="p-4 bg-muted/40 rounded-xl border hover:border-primary/50 transition-colors duration-300 animate-in slide-in-from-bottom-2 fade-in fill-mode-backwards" style={{ animationDelay: "0ms" }}>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Tracking No</p>
-                    <p className="font-bold text-lg text-foreground tracking-tight">{trackingData.tracking_no}</p>
-                  </div>
-                  <div className="p-4 bg-muted/40 rounded-xl border hover:border-primary/50 transition-colors duration-300 animate-in slide-in-from-bottom-2 fade-in fill-mode-backwards" style={{ animationDelay: "100ms" }}>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Status</p>
-                    <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold bg-primary/10 text-primary">
-                      {trackingData.tracking_current_status || trackingData.status || "In Transit"}
-                    </div>
-                  </div>
-                  <div className="p-4 bg-muted/40 rounded-xl border hover:border-primary/50 transition-colors duration-300 animate-in slide-in-from-bottom-2 fade-in fill-mode-backwards" style={{ animationDelay: "200ms" }}>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Chargeable Weight</p>
-                    <p className="font-bold text-lg text-foreground tracking-tight">{trackingData.chargeable_weight || "0.00"}</p>
-                  </div>
-                  <div className="p-4 bg-muted/40 rounded-xl border hover:border-primary/50 transition-colors duration-300 animate-in slide-in-from-bottom-2 fade-in fill-mode-backwards" style={{ animationDelay: "300ms" }}>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">PCS</p>
-                    <p className="font-bold text-lg text-foreground tracking-tight">{trackingData.pcs || "1"}</p>
-                  </div>
-                </div>
-
-                {/* Additional Details Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-4 p-6 bg-muted/20 rounded-xl border animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-backwards" style={{ animationDelay: "350ms" }}>
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Forwarding No</p>
-                    <p className="font-medium mt-1">{trackingData.forwarding_no || "-"}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Forwarding No 2</p>
-                    <p className="font-medium mt-1">{trackingData.forwarding_no2 || "-"}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Reference No</p>
-                    <p className="font-medium mt-1">{trackingData.reference_no || "-"}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Expected Date</p>
-                    <p className="font-medium mt-1">{trackingData.expected_datetime || "-"}</p>
-                  </div>
-                  {/* Forwarding Link */}
-                  <div className="col-span-2 md:col-span-4 border-t pt-4 mt-2 flex gap-4 flex-wrap">
-                    {trackingData.forwarding_url && (
-                      <a href={trackingData.forwarding_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-sm font-semibold text-primary hover:underline group">
-                        <Search className="h-4 w-4" /> View Forwarder Tracking
-                      </a>
-                    )}
-                    {trackingData.pod_image && (
-                      <a href={trackingData.pod_image} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-sm font-semibold text-primary hover:underline group">
-                        <Shield className="h-4 w-4" /> View POD Image
-                      </a>
-                    )}
-                    {trackingData.pod_signature && (
-                      <a href={trackingData.pod_signature} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-sm font-semibold text-primary hover:underline group">
-                        <Shield className="h-4 w-4" /> View POD Signature
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                {/* Dynamic Details Table */}
-                {dynamicList && dynamicList.length > 0 && (
-                  <div className="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-backwards" style={{ animationDelay: "400ms" }}>
-                    <h3 className="text-lg font-bold flex items-center gap-2">
-                      <Search className="h-4 w-4 text-primary" />
-                      Shipment Information
-                    </h3>
-                    <div className="border rounded-xl overflow-hidden shadow-sm">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="bg-muted/50 hover:bg-muted/50">
-                            <TableHead className="w-1/3 text-primary font-bold">Parameter</TableHead>
-                            <TableHead className="text-primary font-bold">Value</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {dynamicList.map((item: any, index: number) => (
-                            <TableRow key={index} className="hover:bg-muted/20 transition-colors">
-                              <TableCell className="font-medium text-muted-foreground">{item[0]}</TableCell>
-                              <TableCell className="font-medium text-foreground">{item[1]}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </div>
-                )}
-
-                {/* History/Events */}
-                {history && history.length > 0 && (
-                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-backwards" style={{ animationDelay: "500ms" }}>
-                    <h3 className="text-lg font-bold flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-primary" />
-                      Tracking History
-                    </h3>
-                    <div className="relative border rounded-xl overflow-hidden shadow-sm">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="bg-muted/50 hover:bg-muted/50">
-                            <TableHead className="font-semibold">Date & Time</TableHead>
-                            <TableHead className="font-semibold">Status</TableHead>
-                            <TableHead className="font-semibold">Location</TableHead>
-                            <TableHead className="font-semibold">Description</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {history.map((event: any, index: number) => (
-                            <TableRow key={index} className="hover:bg-muted/20 transition-colors group">
-                              <TableCell className="font-medium whitespace-nowrap text-muted-foreground group-hover:text-primary transition-colors">
-                                {event.event_at}
-                              </TableCell>
-                              <TableCell>
-                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${(event.event_state || event.event_remark || "").toLowerCase().includes("delivered")
-                                  ? "bg-green-100 text-green-700 border border-green-200"
-                                  : "bg-blue-100 text-blue-700 border border-blue-200"
-                                  }`}>
-                                  {event.event_state || event.event_remark}
-                                </span>
-                              </TableCell>
-                              <TableCell className="font-medium">{event.event_location}</TableCell>
-                              <TableCell className="text-muted-foreground">{event.event_description}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
-    </section>
+</section>
   );
 };
 
