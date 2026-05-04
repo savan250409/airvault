@@ -18,6 +18,11 @@ interface Internship {
     created_at?: string;
     test_answers?: string;
 
+     preferred_location?: string;
+    faculty_name?: string;
+    faculty_contact?: string;
+    faculty_email?: string;
+
     result?: {   // 👈 ADD THIS
         correct: number;
         incorrect: number;
@@ -220,10 +225,38 @@ const InternshipPage = () => {
                                             <td className="px-4 py-2">{selectedItem.city}</td>
                                         </tr>
 
+                                        <tr className="border-b">
+    <td className="bg-gray-100 px-4 py-2 font-medium">Preferred Location</td>
+    <td className="px-4 py-2">{selectedItem.preferred_location}</td>
+</tr>
+
                                         <tr>
                                             <td className="bg-gray-100 px-4 py-2 font-medium">Motivation</td>
                                             <td className="px-4 py-2">{selectedItem.motivation}</td>
                                         </tr>
+
+                                        {/* FACULTY INFORMATION */}
+
+<tr className="border-t">
+    <td colSpan={2} className="bg-blue-50 px-4 py-3 font-semibold text-blue-900">
+        Faculty Information
+    </td>
+</tr>
+
+<tr className="border-b">
+    <td className="bg-gray-100 px-4 py-2 font-medium">Faculty Name</td>
+    <td className="px-4 py-2">{selectedItem.faculty_name}</td>
+</tr>
+
+<tr className="border-b">
+    <td className="bg-gray-100 px-4 py-2 font-medium">Faculty Contact</td>
+    <td className="px-4 py-2">{selectedItem.faculty_contact}</td>
+</tr>
+
+<tr>
+    <td className="bg-gray-100 px-4 py-2 font-medium">Faculty Email</td>
+    <td className="px-4 py-2">{selectedItem.faculty_email}</td>
+</tr>
 
                                         {/* Optional created_at */}
                                         {selectedItem.created_at && (

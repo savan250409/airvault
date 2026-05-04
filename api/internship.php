@@ -10,6 +10,84 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 // ================= CREATE =================
 
+// function createInternship() {
+//     global $conn;
+
+//     $data = json_decode(file_get_contents("php://input"), true);
+
+//     $name = $data['name'] ?? '';
+//     $email = $data['email'] ?? '';
+//     $phone = $data['phone'] ?? '';
+//     $college = $data['college'] ?? '';
+//     $degree = $data['degree'] ?? '';
+//     $city = $data['city'] ?? '';
+//     $motivation = $data['motivation'] ?? '';
+
+//     // Validation
+//     if (!$name || !$email || !$phone) {
+//         echo json_encode([
+//             "status" => false,
+//             "message" => "Name, Email and Phone are required"
+//         ]);
+//         return;
+//     }
+
+//     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//         echo json_encode([
+//             "status" => false,
+//             "message" => "Invalid email format"
+//         ]);
+//         return;
+//     }
+
+//     // Check duplicate email
+//     $check = $conn->prepare("SELECT id FROM internships WHERE email = ?");
+//     $check->bind_param("s", $email);
+//     $check->execute();
+//     $result = $check->get_result();
+
+//     if ($result->num_rows > 0) {
+//         echo json_encode([
+//             "status" => false,
+//             "message" => "Email already exists"
+//         ]);
+//         return;
+//     }
+
+//     // Insert
+//     $stmt = $conn->prepare("
+//         INSERT INTO internships 
+//         (name, email, phone, college, degree, city, motivation)
+//         VALUES (?, ?, ?, ?, ?, ?, ?)
+//     ");
+
+//     if (!$stmt) {
+//         echo json_encode([
+//             "status" => false,
+//             "message" => "Prepare Error: " . $conn->error
+//         ]);
+//         return;
+//     }
+
+//     $stmt->bind_param("sssssss", $name, $email, $phone, $college, $degree, $city, $motivation);
+
+//     if ($stmt->execute()) {
+//         echo json_encode([
+//             "status" => true,
+//             "message" => "Internship form submitted successfully",
+//             "data" => [
+//                 "id" => $stmt->insert_id
+//             ]
+//         ]);
+//     } else {
+//         echo json_encode([
+//             "status" => false,
+//             "message" => "Insert Error: " . $stmt->error
+//         ]);
+//     }
+// }
+
+
 function createInternship() {
     global $conn;
 
@@ -21,13 +99,23 @@ function createInternship() {
     $college = $data['college'] ?? '';
     $degree = $data['degree'] ?? '';
     $city = $data['city'] ?? '';
+    $preferred_location = $data['preferred_location'] ?? '';
     $motivation = $data['motivation'] ?? '';
 
-    // Validation
-    if (!$name || !$email || !$phone) {
+    // NEW FIELDS
+    $faculty_name = $data['faculty_name'] ?? '';
+    $faculty_contact = $data['faculty_contact'] ?? '';
+    $faculty_email = $data['faculty_email'] ?? '';
+
+    // ✅ Validation
+    if (
+        !$name || !$email || !$phone ||
+        !$preferred_location ||
+        !$faculty_name || !$faculty_contact || !$faculty_email
+    ) {
         echo json_encode([
             "status" => false,
-            "message" => "Name, Email and Phone are required"
+            "message" => "All fields are required"
         ]);
         return;
     }
@@ -35,12 +123,20 @@ function createInternship() {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode([
             "status" => false,
-            "message" => "Invalid email format"
+            "message" => "Invalid student email format"
         ]);
         return;
     }
 
-    // Check duplicate email
+    if (!filter_var($faculty_email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode([
+            "status" => false,
+            "message" => "Invalid faculty email format"
+        ]);
+        return;
+    }
+
+    // ✅ Check duplicate email
     $check = $conn->prepare("SELECT id FROM internships WHERE email = ?");
     $check->bind_param("s", $email);
     $check->execute();
@@ -54,11 +150,11 @@ function createInternship() {
         return;
     }
 
-    // Insert
+    // ✅ Insert query updated
     $stmt = $conn->prepare("
         INSERT INTO internships 
-        (name, email, phone, college, degree, city, motivation)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        (name, email, phone, college, degree, city, preferred_location, motivation, faculty_name, faculty_contact, faculty_email)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
     if (!$stmt) {
@@ -69,7 +165,20 @@ function createInternship() {
         return;
     }
 
-    $stmt->bind_param("sssssss", $name, $email, $phone, $college, $degree, $city, $motivation);
+    $stmt->bind_param(
+        "sssssssssss",
+        $name,
+        $email,
+        $phone,
+        $college,
+        $degree,
+        $city,
+        $preferred_location,
+        $motivation,
+        $faculty_name,
+        $faculty_contact,
+        $faculty_email
+    );
 
     if ($stmt->execute()) {
         echo json_encode([

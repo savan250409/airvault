@@ -8,7 +8,7 @@ import parulLogo from "@/assets/partners/Parul-University.png";
 const UniversityCollaborations = () => {
     const universities = [
         { name: "Parul University, Vadodara", logo: parulLogo },
-        { name: "Marwadi University, Rajkot", logo: marwadiLogo },
+        // { name: "Marwadi University, Rajkot", logo: marwadiLogo },
         { name: "Sigma University, Vadodara", logo: sigmaLogo },
         { name: "Sardar Patel University, Anand", logo: spUniversityLogo },
         { name: "Navrachana University, Vadodara", logo: navrachanaLogo },

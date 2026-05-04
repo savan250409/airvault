@@ -14,7 +14,12 @@ const Internship = () => {
         college: "",
         degree: "",
         city: "",
+        preferred_location: "", 
         motivation: "",
+
+         faculty_name: "",
+  faculty_contact: "",
+  faculty_email: ""
     });
     const [loading, setLoading] = useState(false);
     const [testCompleted, setTestCompleted] = useState(false);
@@ -748,6 +753,26 @@ const [selectedOption, setSelectedOption] = useState(null);
                                     />
                                 </div>
 
+                                {/* PREFERRED LOCATION */}
+                                <div className="flex flex-col">
+                                    <label className="mb-1 text-sm font-medium">
+                                        Preferred Location <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="preferred_location"
+                                        value={form.preferred_location}
+                                        onChange={handleChange}
+                                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d2dd0]"
+                                        required
+                                    >
+                                        <option value="">Select preferred location</option>
+                                        <option value="Vadodara">Vadodara</option>
+                                        <option value="Ahmedabad">Ahmedabad</option>
+                                        <option value="Rajkot">Rajkot</option>
+                                        <option value="Indore">Indore</option>
+                                    </select>
+                                </div>
+
                             </div>
 
                             {/* MOTIVATION */}
@@ -764,6 +789,70 @@ const [selectedOption, setSelectedOption] = useState(null);
                                     required
                                 />
                             </div>
+
+                            <div className="mt-8">
+    <h2 className="text-xl font-semibold mb-4 text-[#0d2dd0]">
+        Faculty Information
+    </h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        {/* FACULTY NAME */}
+        <div className="flex flex-col">
+            <label className="mb-1 text-sm font-medium">
+                 Name <span className="text-red-500">*</span>
+            </label>
+            <input
+                name="faculty_name"
+                value={form.faculty_name}
+                onChange={handleChange}
+                placeholder="Enter your faculty name"
+                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d2dd0]"
+                required
+            />
+        </div>
+
+        {/* FACULTY CONTACT */}
+        <div className="flex flex-col">
+            <label className="mb-1 text-sm font-medium">
+                 Contact <span className="text-red-500">*</span>
+            </label>
+            <input
+                name="faculty_contact"
+                value={form.faculty_contact}
+                onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    if (value.length <= 10) {
+                        setForm({ ...form, faculty_contact: value });
+                    }
+                }}
+                placeholder="Enter your faculty contact number"
+                maxLength={10}
+                inputMode="numeric"
+                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d2dd0]"
+                required
+            />
+        </div>
+
+        {/* FACULTY EMAIL */}
+        <div className="flex flex-col md:col-span-2">
+            <label className="mb-1 text-sm font-medium">
+                Email <span className="text-red-500">*</span>
+            </label>
+            <input
+                name="faculty_email"
+                type="email"
+                value={form.faculty_email}
+                onChange={handleChange}
+                placeholder="Enter your faculty email"
+                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d2dd0]"
+                required
+            />
+        </div>
+
+    </div>
+</div>
+
 
                             {/* BUTTON */}
                             <div className="mt-6 flex justify-end">
