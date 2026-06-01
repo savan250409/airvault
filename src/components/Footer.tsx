@@ -16,6 +16,11 @@ const Footer = () => {
     { label: "Custom Clearance", href: "/services" }
   ];
 
+  const legalLinks = [
+    { label: "Return Policy", href: "/return-policy" },
+    { label: "Refund Policy", href: "/refund-policy" }
+  ];
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -25,7 +30,7 @@ const Footer = () => {
 
       {/* MAIN */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12">
 
           {/* Company */}
           <div className="space-y-4 sm:space-y-6 text-center sm:text-left">
@@ -60,6 +65,21 @@ const Footer = () => {
                   <span className="w-1.5 h-1.5 bg-secondary rounded-full"></span>
                   <a href={service.href} className="text-sm sm:text-base hover:text-secondary transition">
                     {service.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div className="space-y-4 sm:space-y-6 text-center sm:text-left">
+            <h4 className="text-lg sm:text-xl font-semibold">Legal</h4>
+            <ul className="space-y-2 sm:space-y-3">
+              {legalLinks.map((link, i) => (
+                <li key={i} className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start">
+                  <span className="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+                  <a href={link.href} className="text-sm sm:text-base hover:text-secondary transition">
+                    {link.label}
                   </a>
                 </li>
               ))}

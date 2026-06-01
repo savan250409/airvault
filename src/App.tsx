@@ -17,6 +17,8 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Internship from "./pages/Internship";
+import RefundPolicy from "./pages/RefundPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
 
 
 
@@ -55,6 +57,8 @@ const App = () => (
           <Route path="/track-trace" element={<TrackTracePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/internship" element={<Internship />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 
           {/* Admin login */}
