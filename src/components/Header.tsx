@@ -1,7 +1,26 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn, ShieldCheck, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+const loginLinks = [
+  {
+    label: "Admin",
+    href: "https://admin.airvlt.com",
+    Icon: ShieldCheck,
+  },
+  {
+    label: "Customer",
+    href: "http://online.airvlt.com/",
+    Icon: User,
+  },
+];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,6 +98,26 @@ const Header = () => {
               <img src="/jctrans.png" className="h-6" />
               <img src="/gla_v2.png" className="h-8" />
             </div>
+
+            {/* Login Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="gradient-primary" className="gap-2">
+                  <LogIn className="w-4 h-4" />
+                  Login
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-36">
+                {loginLinks.map(({ label, href, Icon }) => (
+                  <DropdownMenuItem key={label} asChild className="cursor-pointer">
+                    <a href={href} rel="noopener noreferrer" className="flex items-center gap-2 py-1.5">
+                      <Icon className="w-4 h-4 text-primary" />
+                      <span className="font-medium">{label}</span>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* ✅ Mobile Menu Button */}
@@ -93,7 +132,7 @@ const Header = () => {
         {/* ✅ Mobile Menu */}
         <div
           className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            isMenuOpen ? "max-h-[400px] py-4" : "max-h-0"
+            isMenuOpen ? "max-h-[600px] py-4" : "max-h-0"
           }`}
         >
           <nav className="flex flex-col gap-4 border-t pt-4">
@@ -115,9 +154,26 @@ const Header = () => {
                 <Link to="/internship">Internship</Link>
               </Button>
 
-              <Button variant="gradient-primary">
-                Get Quote
-              </Button>
+              {/* Login Options */}
+              <div className="border-t pt-3">
+                <p className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                  <LogIn className="w-4 h-4" /> Login
+                </p>
+                <div className="flex flex-col gap-2">
+                  {loginLinks.map(({ label, href, Icon }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 rounded-md border p-3 hover:border-primary hover:bg-primary/5 transition"
+                    >
+                      <Icon className="w-5 h-5 text-primary" />
+                      <span className="font-medium text-gray-800">{label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
 
             </div>
 
