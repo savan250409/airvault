@@ -113,6 +113,7 @@ const Hero = () => {
   const history = trackingData ? getHistory(trackingData) : [];
 
   return (
+    <>
  <section className="relative min-h-screen flex items-center overflow-hidden">
 
   {/* Background */}
@@ -157,7 +158,7 @@ const Hero = () => {
       </p>
 
       {/* Tracking */}
-      {/* <div className="flex flex-col sm:flex-row gap-3 max-w-md mb-10">
+      <div className="flex flex-col sm:flex-row gap-3 max-w-md mb-10">
         <Input
           placeholder="Enter Tracking Number"
           value={trackingNumber}
@@ -166,7 +167,7 @@ const Hero = () => {
         <Button onClick={handleTrack} disabled={isLoading}>
           {isLoading ? <Loader2 className="animate-spin" /> : "Track"}
         </Button>
-      </div> */}
+      </div>
 
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
@@ -195,6 +196,75 @@ const Hero = () => {
   </div>
 
 </section>
+
+      {/* Tracking Result Dialog */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Tracking Details</DialogTitle>
+          </DialogHeader>
+
+          {trackingData && (
+            <div className="space-y-4">
+              {/* Key Info */}
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                {Object.entries(trackingData)
+                  .filter(([, v]) => !Array.isArray(v) && v !== null && v !== "")
+                  .map(([key, value]) => (
+                    <div key={key} className="flex gap-2">
+                      <span className="font-semibold text-gray-600 capitalize">{key.replace(/_/g, " ")}:</span>
+                      <span className="text-gray-800">{String(value)}</span>
+                    </div>
+                  ))}
+              </div>
+
+              {/* Item List */}
+              {dynamicList && dynamicList.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-gray-700 mb-2">Item Details</h3>
+                  <Table>
+                    <TableBody>
+                      {dynamicList.map((row: any[], i: number) => (
+                        <TableRow key={i}>
+                          {row.map((cell: any, j: number) => (
+                            <TableCell key={j}>{cell}</TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+
+              {/* History */}
+              {history && history.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-gray-700 mb-2">Tracking History</h3>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Date / Time</TableHead>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Location</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {history.map((event: any, i: number) => (
+                        <TableRow key={i}>
+                          <TableCell className="whitespace-nowrap">{event.event_at}</TableCell>
+                          <TableCell>{event.event_description}</TableCell>
+                          <TableCell>{event.location || "-"}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
