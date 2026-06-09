@@ -50,6 +50,17 @@ const Header = () => {
           : "bg-white/95 backdrop-blur-sm"
       }`}
     >
+      {/* Notice Ticker */}
+      <div className="bg-amber-50 border-b border-amber-200 overflow-hidden py-1">
+        <div className="animate-marquee text-xs text-amber-800 whitespace-nowrap">
+          {[...Array(4)].map((_, i) => (
+            <span key={i} className="px-12">
+              ⚠️ The ongoing conflict in the Middle East is causing airspace disruptions, potentially delaying shipments and increasing air freight costs substantially. Both new and existing shipments may be affected, with longer delivery times anticipated.
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="container-custom px-4">
         <div className="flex items-center justify-between py-3">
 
