@@ -18,7 +18,8 @@ const Footer = () => {
 
   const legalLinks = [
     { label: "Return Policy", href: "/return-policy" },
-    { label: "Refund Policy", href: "/refund-policy" }
+    { label: "Refund Policy", href: "/refund-policy" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
   ];
 
   const scrollToTop = () => {

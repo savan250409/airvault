@@ -19,6 +19,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import Internship from "./pages/Internship";
 import RefundPolicy from "./pages/RefundPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 
 
@@ -59,6 +60,7 @@ const App = () => (
           <Route path="/internship" element={<Internship />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 
           {/* Admin login */}
