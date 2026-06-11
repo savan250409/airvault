@@ -4,7 +4,8 @@ const Footer = () => {
   const quickLinks = [
     { label: "About Us", href: "/about" },
     { label: "Our Services", href: "/services" },
-    { label: "Contact", href: "/contact" }
+    { label: "Contact", href: "/contact" },
+    { label: "Terms & Conditions", href: "/terms-conditions" },
   ];
 
   const services = [
@@ -20,6 +21,7 @@ const Footer = () => {
     { label: "Return Policy", href: "/return-policy" },
     { label: "Refund Policy", href: "/refund-policy" },
     { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Cancellation Policy", href: "/cancellation-policy" },
   ];
 
   const scrollToTop = () => {

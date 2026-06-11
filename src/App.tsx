@@ -20,8 +20,8 @@ import Internship from "./pages/Internship";
 import RefundPolicy from "./pages/RefundPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-
-
+import TermsConditions from "@/pages/TermsConditions";
+import CancellationPolicy from "@/pages/CancellationPolicy";
 
 // Admin 
 import PrivateRoute from "./pages/admin/PrivateRoute";
@@ -61,6 +61,11 @@ const App = () => (
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+          <Route
+            path="/terms-conditions"
+            element={<TermsConditions />}
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 
           {/* Admin login */}
