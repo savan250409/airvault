@@ -31,6 +31,26 @@ const backgroundImages = [
   airTransport
 ];
 
+// Fields to hide from the tracking details popup
+const HIDDEN_FIELDS = new Set([
+  "errors",
+  "tracking no",
+  "awb no",
+  "consignee name",
+  "receiver name",
+  "consignee company",
+  "shipper company",
+  "customer name",
+  "customer code",
+  "customer company name",
+  "shipper name",
+]);
+
+const normalizeLabel = (label: any) =>
+  String(label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+const isHiddenField = (label: any) => HIDDEN_FIELDS.has(normalizeLabel(label));
+
 const Hero = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -210,6 +230,7 @@ const Hero = () => {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {Object.entries(trackingData)
                   .filter(([, v]) => !Array.isArray(v) && v !== null && v !== "")
+                  .filter(([key]) => !isHiddenField(key))
                   .map(([key, value]) => (
                     <div key={key} className="flex gap-2">
                       <span className="font-semibold text-gray-600 capitalize">{key.replace(/_/g, " ")}:</span>
@@ -224,7 +245,9 @@ const Hero = () => {
                   <h3 className="font-semibold text-gray-700 mb-2">Item Details</h3>
                   <Table>
                     <TableBody>
-                      {dynamicList.map((row: any[], i: number) => (
+                      {dynamicList
+                        .filter((row: any[]) => !isHiddenField(row[0]))
+                        .map((row: any[], i: number) => (
                         <TableRow key={i}>
                           {row.map((cell: any, j: number) => (
                             <TableCell key={j}>{cell}</TableCell>
