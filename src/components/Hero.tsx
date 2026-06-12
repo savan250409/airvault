@@ -51,6 +51,9 @@ const normalizeLabel = (label: any) =>
 
 const isHiddenField = (label: any) => HIDDEN_FIELDS.has(normalizeLabel(label));
 
+const isUrlValue = (value: any) =>
+  typeof value === "string" && /^https?:\/\//i.test(value.trim());
+
 const Hero = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -232,9 +235,21 @@ const Hero = () => {
                   .filter(([, v]) => !Array.isArray(v) && v !== null && v !== "")
                   .filter(([key]) => !isHiddenField(key))
                   .map(([key, value]) => (
-                    <div key={key} className="flex gap-2">
-                      <span className="font-semibold text-gray-600 capitalize">{key.replace(/_/g, " ")}:</span>
-                      <span className="text-gray-800">{String(value)}</span>
+                    <div key={key} className={`flex gap-2 min-w-0 ${isUrlValue(value) ? "col-span-2" : ""}`}>
+                      <span className="font-semibold text-gray-600 capitalize whitespace-nowrap">{key.replace(/_/g, " ")}:</span>
+                      {isUrlValue(value) ? (
+                        <a
+                          href={String(value)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={String(value)}
+                          className="text-blue-600 underline break-all hover:text-blue-700"
+                        >
+                          {String(value)}
+                        </a>
+                      ) : (
+                        <span className="text-gray-800">{String(value)}</span>
+                      )}
                     </div>
                   ))}
               </div>
@@ -247,6 +262,9 @@ const Hero = () => {
                     <TableBody>
                       {dynamicList
                         .filter((row: any[]) => !isHiddenField(row[0]))
+                        .filter((row: any[]) =>
+                          row.slice(1).some((cell: any) => cell !== null && String(cell).trim() !== "")
+                        )
                         .map((row: any[], i: number) => (
                         <TableRow key={i}>
                           {row.map((cell: any, j: number) => (
