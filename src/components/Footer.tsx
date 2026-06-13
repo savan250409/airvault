@@ -145,10 +145,22 @@ const Footer = () => {
 
             {/* Social */}
             <div className="flex items-center gap-4">
-              <a href="#" className="hover:text-secondary">
+              <a
+                href="https://www.instagram.com/airvaultexpress?igsh=MTI0djBzcjFhN21seA=="
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="hover:text-secondary"
+              >
                 <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
               </a>
-              <a href="#" className="hover:text-secondary">
+              <a
+                href="https://www.linkedin.com/company/jet-cargoindia/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="hover:text-secondary"
+              >
                 <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
               </a>
             </div>
