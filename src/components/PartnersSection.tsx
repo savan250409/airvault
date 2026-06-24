@@ -7,6 +7,16 @@ import fedexLogo from "@/assets/partners/FedEx-Logo.png";
 import aramexLogo from "@/assets/partners/Aramex.png";
 import bluedartLogo from "@/assets/partners/BlueDart.png";
 
+// Stat boxes shown in the auto-scrolling marquee
+const statBoxes = [
+  { value: "100+", label: "Global Partners" },
+  { value: "100+", label: "Destinations" },
+  { value: "24/7", label: "Support" },
+  { value: "99%", label: "On-time Delivery" },
+  { value: "700+", label: "Exporters", sub: "SMEs Empowered" },
+  { value: "300+", label: "Importers", sub: "Trusted by Leading Businesses" },
+];
+
 const PartnersSection = () => {
   const [currentSet, setCurrentSet] = useState(0);
 
@@ -170,23 +180,26 @@ const PartnersSection = () => {
           </div>
         </div>
 
-        {/* Stats (UNCHANGED) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <div className="text-center p-6 rounded-lg bg-card border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">50+</div>
-            <div className="text-sm text-muted-foreground">Global Partners</div>
-          </div>
-          <div className="text-center p-6 rounded-lg bg-card border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">100+</div>
-            <div className="text-sm text-muted-foreground">Destinations</div>
-          </div>
-          <div className="text-center p-6 rounded-lg bg-card border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-            <div className="text-sm text-muted-foreground">Support</div>
-          </div>
-          <div className="text-center p-6 rounded-lg bg-card border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">99.5%</div>
-            <div className="text-sm text-muted-foreground">On-time Delivery</div>
+        {/* Stats — auto-scrolling marquee (opposite direction) */}
+        <div className="mt-16 overflow-hidden">
+          <div className="flex items-stretch animate-scroll-partners-reverse">
+            {/* Two identical sets for a seamless loop */}
+            {[0, 1].map((set) => (
+              <div key={set} className="flex items-stretch gap-6 shrink-0 px-3">
+                {statBoxes.map((stat, i) => (
+                  <div
+                    key={`${set}-${i}`}
+                    className="text-center p-6 rounded-lg bg-card border border-border/50 w-56 shrink-0 flex flex-col justify-center"
+                  >
+                    <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    {stat.sub && (
+                      <div className="text-xs text-muted-foreground/70 mt-1">{stat.sub}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

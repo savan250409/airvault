@@ -9,8 +9,12 @@ import qatarLogo from "@/assets/partners/Qatar-Airways.png";
 import indigoLogo from "@/assets/partners/Indigo.png";
 import etihadLogo from "@/assets/partners/Etihad-Airways.png";
 
+// Served from /public so it resolves reliably as an <img> URL in dev and build.
+const ethiopianLogo = "/partners/Ethiopian-Airlines.svg";
+
 const AssociatedAirlines = () => {
     const airlines = [
+        { name: "Ethiopian Airlines", logo: ethiopianLogo },
         { name: "Air India", logo: airIndiaLogo },
         { name: "IndiGo", logo: indigoLogo },
         { name: "Singapore Airlines", logo: singaporeLogo },
@@ -18,7 +22,6 @@ const AssociatedAirlines = () => {
         { name: "Emirates", logo: emiratesLogo },
         { name: "Etihad Airways", logo: etihadLogo },
         { name: "Cathay Pacific", logo: null },
-        { name: "Ethiopian Airlines", logo: null },
         { name: "Delta Airlines", logo: null },
         { name: "Kenya Airways", logo: null },
         { name: "VietJet Air", logo: null },

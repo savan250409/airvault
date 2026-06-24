@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import ServicesPage from "./pages/ServicesPage";
@@ -13,6 +13,8 @@ import BlogPage from "./pages/BlogPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import EventsPage from "./pages/EventsPage";
 import TrackTracePage from "./pages/TrackTracePage";
+import WeightCalculator from "./pages/WeightCalculator";
+import ExportInvoice from "./pages/ExportInvoice";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import WhatsAppButton from "./components/WhatsAppButton";
@@ -21,6 +23,14 @@ import RefundPolicy from "./pages/RefundPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "@/pages/TermsConditions";
+import InsightsPage from "./pages/InsightsPage";
+import InsightDetailPage from "./pages/InsightDetailPage";
+import ExpertTalksPage from "./pages/ExpertTalksPage";
+import ExpertTalkDetailPage from "./pages/ExpertTalkDetailPage";
+import InsightsAdmin from "./pages/admin/Insights";
+import InsightsManage from "./pages/admin/Insights_manage";
+import ExpertTalksAdmin from "./pages/admin/ExpertTalks";
+import ExpertTalksManage from "./pages/admin/ExpertTalks_manage";
 import CancellationPolicy from "@/pages/CancellationPolicy";
 
 // Admin 
@@ -56,12 +66,18 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/track-trace" element={<TrackTracePage />} />
+          <Route path="/weight-calculator" element={<WeightCalculator />} />
+          <Route path="/export-invoice" element={<ExportInvoice />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/internship" element={<Internship />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+          <Route path="/insights" element={<InsightsPage />} />
+          <Route path="/insights/:slug" element={<InsightDetailPage />} />
+          <Route path="/expert-talks" element={<ExpertTalksPage />} />
+          <Route path="/expert-talks/:slug" element={<ExpertTalkDetailPage />} />
           <Route
             path="/terms-conditions"
             element={<TermsConditions />}
@@ -69,7 +85,8 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 
           {/* Admin login */}
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin" element={<Navigate to="/admin-login" replace />} />
 
           <Route element={<PrivateRoute />}>
             <Route element={<AdminLayout />}>
@@ -85,6 +102,12 @@ const App = () => (
               <Route path="/admin/case-studies/edit/:id" element={<CaseStudies_manage />} />
               <Route path="/admin/internship" element={<InternshipAdmin />} />
               <Route path="/admin/question" element={<Question />} />
+              <Route path="/admin/insights" element={<InsightsAdmin />} />
+              <Route path="/admin/insights/add" element={<InsightsManage />} />
+              <Route path="/admin/insights/edit/:id" element={<InsightsManage />} />
+              <Route path="/admin/expert-talks" element={<ExpertTalksAdmin />} />
+              <Route path="/admin/expert-talks/add" element={<ExpertTalksManage />} />
+              <Route path="/admin/expert-talks/edit/:id" element={<ExpertTalksManage />} />
             </Route>
           </Route>
 

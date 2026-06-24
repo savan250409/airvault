@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Truck, Plane, Clock, Shield } from "lucide-react";
+import { getDeliveries } from "@/lib/deliveries";
 
 const StatsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,9 +14,9 @@ const StatsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const stats = [
-    { icon: Truck, target: 31000, label: "Deliveries", suffix: "+" },
+    { icon: Truck, target: getDeliveries(), label: "Deliveries", suffix: "+" },
     { icon: Plane, target: 100, label: "Destinations", suffix: "+" },
-    { icon: Clock, target: 99.5, label: "On Time", suffix: "%" },
+    { icon: Clock, target: 99, label: "On Time", suffix: "%" },
     { icon: Shield, target: 100, label: "Secure", suffix: "%" }
   ];
 

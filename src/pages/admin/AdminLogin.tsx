@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import BASE_URI from "@/config";
@@ -7,14 +7,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isCheckingLogin, setIsCheckingLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    if (token) navigate("/admin/dashboard", { replace: true });
-    else setIsCheckingLogin(false);
-  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,16 +22,17 @@ const AdminLogin = () => {
 
       const data = await res.json();
 
-      if (!res.ok) {
+      // API returns HTTP 200 even on failure, so check the payload's status flag.
+      if (!data.status || !data.admin) {
         toast.error(data.message || "Login failed");
         setIsLoading(false);
         return;
       }
 
-      // ✅ Store login response
-      localStorage.setItem("adminToken", data.admin.token);
-      localStorage.setItem("adminName", data.admin.name);
-      localStorage.setItem("adminEmail", data.admin.email);
+      // ✅ Store login response (auth.php does not return a token)
+      localStorage.setItem("adminToken", data.admin.email || "loggedin");
+      localStorage.setItem("adminName", data.admin.name || "");
+      localStorage.setItem("adminEmail", data.admin.email || "");
       localStorage.setItem("isAdminLoggedIn", "true");
 
       toast.success("Login successful!");
@@ -50,8 +44,6 @@ const AdminLogin = () => {
       setIsLoading(false);
     }
   };
-
-  if (isCheckingLogin) return null;
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

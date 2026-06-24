@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, LogIn, ShieldCheck, User } from "lucide-react";
+import { Menu, X, LogIn, ShieldCheck, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -12,7 +12,7 @@ import {
 const loginLinks = [
   {
     label: "Admin",
-    href: "https://admin.airvlt.com",
+    href: "https://admin.airvlt.com/",
     Icon: ShieldCheck,
   },
   {
@@ -25,6 +25,7 @@ const loginLinks = [
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -35,12 +36,38 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuItems = [
+  type NavItem = { label: string; href?: string; children?: { label: string; href: string }[] };
+  const menuItems: NavItem[] = [
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
+    {
+      label: "News",
+      children: [
+        { label: "Insights", href: "/insights" },
+        { label: "Expert Talks", href: "/expert-talks" },
+      ],
+    },
+    {
+      label: "Utility Tools",
+      children: [
+        { label: "Weight Calculator", href: "/weight-calculator" },
+        { label: "Export Invoice", href: "/export-invoice" },
+      ],
+    },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
+
+  // Active for the section, including inner/detail pages (e.g. /insights/:slug).
+  // Home stays exact so it isn't active on every route.
+  const isActivePath = (href: string) =>
+    href === "/"
+      ? location.pathname === "/"
+      : location.pathname === href || location.pathname.startsWith(href + "/");
+
+  // A parent (News) is active when any of its children is active.
+  const isItemActive = (item: NavItem) =>
+    item.href ? isActivePath(item.href) : !!item.children?.some((c) => isActivePath(c.href));
 
   return (
     <header
@@ -75,15 +102,59 @@ const Header = () => {
           </Link>
 
           {/* ✅ Desktop Menu */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-12">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-5">
             {menuItems.map((item) => {
-              const isActive = location.pathname === item.href;
+              const isActive = isItemActive(item);
+
+              // Dropdown parent (e.g. News) — opens on hover or click
+              if (item.children) {
+                return (
+                  <div
+                    key={item.label}
+                    className="relative"
+                    onMouseEnter={() => setOpenMenu(item.label)}
+                    onMouseLeave={() => setOpenMenu(null)}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenMenu((v) => (v === item.label ? null : item.label))}
+                      className={`flex items-center gap-1 whitespace-nowrap text-sm xl:text-base font-medium transition ${
+                        isActive ? "text-primary" : "text-gray-700 hover:text-primary"
+                      }`}
+                    >
+                      {item.label}
+                      <ChevronDown className={`w-4 h-4 transition-transform ${openMenu === item.label ? "rotate-180" : ""}`} />
+                    </button>
+
+                    {openMenu === item.label && (
+                      <div className="absolute top-full left-0 pt-3 z-50">
+                        <div className="w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                          {item.children.map((c) => (
+                            <Link
+                              key={c.label}
+                              to={c.href}
+                              onClick={() => setOpenMenu(null)}
+                              className={`block px-4 py-2.5 text-sm font-medium transition ${
+                                isActivePath(c.href)
+                                  ? "bg-primary/5 text-primary"
+                                  : "text-gray-700 hover:bg-gray-50 hover:text-primary"
+                              }`}
+                            >
+                              {c.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
 
               return (
                 <Link
                   key={item.label}
-                  to={item.href}
-                  className={`relative text-sm xl:text-base font-medium transition ${
+                  to={item.href!}
+                  className={`relative whitespace-nowrap text-sm xl:text-base font-medium transition ${
                     isActive
                       ? "text-primary"
                       : "text-gray-700 hover:text-primary"
@@ -96,18 +167,18 @@ const Header = () => {
           </nav>
 
           {/* ✅ Right Section Desktop */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-4">
 
             {/* Button */}
             <Button variant="outline-animated" asChild>
               <Link to="/internship">Internship</Link>
             </Button>
 
-            {/* Logos */}
-            <div className="flex items-center gap-3 border-l pl-4">
-              <img src="/iata_v2.png" className="h-10" />
-              <img src="/jctrans.png" className="h-6" />
-              <img src="/gla_v2.png" className="h-8" />
+            {/* Logos — shown once the container reaches its max width (1200px) */}
+            <div className="hidden min-[1200px]:flex items-center gap-2.5 border-l pl-3">
+              <img src="/iata_v2.png" className="h-8" />
+              <img src="/jctrans.png" className="h-5" />
+              <img src="/gla_v2.png" className="h-7" />
             </div>
 
             {/* Login Dropdown */}
@@ -148,16 +219,38 @@ const Header = () => {
         >
           <nav className="flex flex-col gap-4 border-t pt-4">
 
-            {menuItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                className="text-base font-medium text-gray-700 hover:text-primary"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {menuItems.map((item) =>
+              item.children ? (
+                <div key={item.label} className="flex flex-col gap-2">
+                  <p className="text-base font-semibold text-gray-900">{item.label}</p>
+                  <div className="flex flex-col gap-2 pl-3 border-l-2 border-gray-100">
+                    {item.children.map((c) => (
+                      <Link
+                        key={c.label}
+                        to={c.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`text-base font-medium transition ${
+                          isActivePath(c.href) ? "text-primary" : "text-gray-600 hover:text-primary"
+                        }`}
+                      >
+                        {c.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.href!}
+                  className={`text-base font-medium transition ${
+                    isItemActive(item) ? "text-primary" : "text-gray-700 hover:text-primary"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
 
             <div className="flex flex-col gap-3 pt-4">
 

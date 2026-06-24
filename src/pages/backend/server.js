@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import path from "path";
 
 import router from "./routes.js"; // all routes
 const app = express();
@@ -11,6 +12,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
+
+// Serve uploaded images at /uploads/... (insights, expert_talks, etc.)
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // Mount all routes
 app.use("/api", router);

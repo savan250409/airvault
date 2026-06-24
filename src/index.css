@@ -358,6 +358,15 @@
   .animate-scroll-partners:hover {
     animation-play-state: paused;
   }
+
+  /* Same seamless loop, opposite direction */
+  .animate-scroll-partners-reverse {
+    animation: scroll-partners 60s linear infinite reverse;
+  }
+
+  .animate-scroll-partners-reverse:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes marquee {

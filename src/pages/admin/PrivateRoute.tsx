@@ -5,7 +5,7 @@ const PrivateRoute = () => {
 
   if (!isLoggedIn) {
     // अगर user login नहीं है → login page redirect
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/admin-login" replace />;
   }
 
   // login है → protected routes render होंगे

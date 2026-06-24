@@ -66,7 +66,7 @@ function registerAdmin() {
             name VARCHAR(255),
             email VARCHAR(255) UNIQUE,
             password VARCHAR(255)
-        )
+        )   
     ");
 
     $check = $conn->query("SELECT * FROM admin WHERE email='$email'");

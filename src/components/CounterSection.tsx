@@ -1,7 +1,7 @@
 const CounterSection = () => {
     const stats = [
         {
-            value: "50+",
+            value: "100+",
             label: "Global Partners"
         },
         {
@@ -13,7 +13,7 @@ const CounterSection = () => {
             label: "Support"
         },
         {
-            value: "99.5%",
+            value: "99%",
             label: "On-time Delivery"
         }
     ];

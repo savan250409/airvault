@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import aboutTeamImg from "../assets/about-team.jpg";
+import { getDeliveries, formatDeliveries } from "@/lib/deliveries";
 
 const AboutSection = () => {
   return (
@@ -44,10 +45,10 @@ const AboutSection = () => {
               >
                 <div className="bg-primary text-white p-4 sm:p-6 lg:p-8 rounded-tr-[2rem] rounded-bl-[2rem] shadow-xl">
                   <div className="text-xl sm:text-2xl lg:text-4xl font-bold mb-1">
-                    31k+
+                    {formatDeliveries(getDeliveries())}+
                   </div>
                   <div className="text-xs sm:text-sm leading-tight opacity-90">
-                    Products<br />Delivered
+                    Deliveries
                   </div>
                 </div>
               </div>

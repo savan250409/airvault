@@ -192,7 +192,7 @@ const ServicesPage = () => {
                 <p className="text-muted-foreground">Happy Clients</p>
               </div>
               <div className="text-center">
-                <h3 className="text-4xl font-bold text-primary mb-2">99.5%</h3>
+                <h3 className="text-4xl font-bold text-primary mb-2">99%</h3>
                 <p className="text-muted-foreground">On-Time Delivery</p>
               </div>
               <div className="text-center">

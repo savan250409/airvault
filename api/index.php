@@ -174,6 +174,56 @@ elseif ($module === "get-question-limit") {
 }
 
 
+// ================= INSIGHTS =================
+elseif ($module === "insights") {
+
+    require "insights.php";
+
+    $m = $_SERVER['REQUEST_METHOD'];
+
+    if ($m == "GET" && !$action) {
+        getAllInsights();                 // GET /insights
+    } elseif ($m == "GET" && $action) {
+        getInsight($action);              // GET /insights/:idOrSlug
+    } elseif ($m == "POST" && $action) {
+        updateInsight($action);           // POST /insights/:id  (multipart update)
+    } elseif ($m == "POST") {
+        addInsight();                     // POST /insights
+    } elseif ($m == "PUT" && $action) {
+        updateInsight($action);           // PUT /insights/:id   (JSON update)
+    } elseif ($m == "DELETE" && $action) {
+        deleteInsight($action);           // DELETE /insights/:id
+    } else {
+        echo json_encode(["status" => false, "message" => "Invalid Insights Route"]);
+    }
+}
+
+
+// ================= EXPERT TALKS =================
+elseif ($module === "expert-talks") {
+
+    require "expert_talks.php";
+
+    $m = $_SERVER['REQUEST_METHOD'];
+
+    if ($m == "GET" && !$action) {
+        getAllExpertTalks();              // GET /expert-talks
+    } elseif ($m == "GET" && $action) {
+        getExpertTalk($action);           // GET /expert-talks/:idOrSlug
+    } elseif ($m == "POST" && $action) {
+        updateExpertTalk($action);        // POST /expert-talks/:id  (multipart update)
+    } elseif ($m == "POST") {
+        addExpertTalk();                  // POST /expert-talks
+    } elseif ($m == "PUT" && $action) {
+        updateExpertTalk($action);        // PUT /expert-talks/:id   (JSON update)
+    } elseif ($m == "DELETE" && $action) {
+        deleteExpertTalk($action);        // DELETE /expert-talks/:id
+    } else {
+        echo json_encode(["status" => false, "message" => "Invalid Expert Talks Route"]);
+    }
+}
+
+
 // ================= DEFAULT =================
 else {
     echo json_encode([

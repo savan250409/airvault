@@ -215,7 +215,7 @@ if ($method === 'GET' && !isset($_GET['id'])) {
     $qRes = $conn->query("SELECT question, correct_answer FROM questions");
 
     while ($qRow = $qRes->fetch_assoc()) {
-        $questionMap[strtolower(trim($qRow['question']))] = strtolower(trim($qRow['correct_answer']));
+        $questionMap[strtolower(trim($qRow['question'] ?? ''))] = strtolower(trim($qRow['correct_answer'] ?? ''));
     }
 
 $dataArr = [];

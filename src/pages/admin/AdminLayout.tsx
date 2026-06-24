@@ -42,7 +42,7 @@ const AdminLayout = () => {
       localStorage.removeItem("adminName");
       localStorage.removeItem("adminEmail");
       localStorage.removeItem("isAdminLoggedIn");
-      navigate("/admin", { replace: true });
+      navigate("/admin-login", { replace: true });
     }
   };
 
@@ -124,6 +124,24 @@ const AdminLayout = () => {
             Case Studies
           </NavLink> */}
 
+          <NavLink
+            to="/admin/insights"
+            className={({ isActive }) =>
+              `block px-6 py-3 rounded-l-full transition ${isActive ? "bg-[#E5A121] text-white font-semibold shadow-md" : "hover:bg-blue-800"
+              }`
+            }
+          >
+            Insights
+          </NavLink>
+          <NavLink
+            to="/admin/expert-talks"
+            className={({ isActive }) =>
+              `block px-6 py-3 rounded-l-full transition ${isActive ? "bg-[#E5A121] text-white font-semibold shadow-md" : "hover:bg-blue-800"
+              }`
+            }
+          >
+            Expert Talks
+          </NavLink>
           <NavLink
             to="/admin/internship"
             className={({ isActive }) =>
