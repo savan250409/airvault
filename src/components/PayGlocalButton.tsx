@@ -12,7 +12,7 @@ const PAYGLOCAL_SCRIPT_SRC = "https://oneclick.payglocal.in/simple.js";
 
 const PAYGLOCAL_BUTTONS: { currency: string; label: string; buttonId: string }[] = [
   { currency: "USD", label: "$ - US Dollar (USD)", buttonId: "pb_y5F9B9KkLnBZ" },
-  { currency: "INR", label: "₹ - Indian Rupee (INR)", buttonId: "pb_qUDOKxgqpiym" },
+  { currency: "INR", label: "₹ - Indian Rupee (INR)", buttonId: "pb_3meLyR9Oq3bD" },
   { currency: "FJD", label: "$ - Fijian Dollar (FJD)", buttonId: "pb_38WziDHlDHq6" },
   { currency: "MXN", label: "$ - Peso (MXN)", buttonId: "pb_fxKrzO58b8W2" },
   { currency: "STD", label: "Db - Dobra (STD)", buttonId: "pb_XqBGdSJ39oMX" },
